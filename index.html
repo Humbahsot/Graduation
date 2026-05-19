@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeffrey's Graduation Celebration — 12 June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-dark: #8B6914;
+    --deep: #1A1A2E;
+    --deep2: #16213E;
+    --surface: #0F3460;
+    --text: #F5F0E8;
+    --text-muted: #B8AFA0;
+    --accent: #E94560;
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(201,168,76,0.25);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Decorative background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 100% 100%, rgba(233,69,96,0.07) 0%, transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--text);
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-date {
+    margin-top: 2.5rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .hero-date .line { flex:1; height:1px; background: linear-gradient(to right, transparent, var(--gold-light)); max-width: 80px; }
+  .hero-date .line.right { background: linear-gradient(to left, transparent, var(--gold-light)); }
+  .hero-date span { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold-light); }
+
+  .hero-details {
+    margin-top: 2rem;
+    display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  .hero-detail {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .hero-detail .label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .hero-detail .value { font-size: 1rem; color: var(--text); }
+
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--text-muted); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    animation: fadeUp 0.8s 0.9s ease both;
+  }
+  .scroll-hint .arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); }
+
+  /* ── SECTION BASE ── */
+  section {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+
+  .section-label {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+    color: var(--text);
+  }
+
+  /* ── MENU ── */
+  .menu-intro {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+  }
+
+  .menu-photo {
+    width: 100%; border-radius: 4px;
+    overflow: hidden; margin-bottom: 2.5rem;
+    border: 1px solid var(--card-border);
+    position: relative;
+  }
+
+  .menu-photo img {
+    width: 100%; height: 380px; object-fit: cover; display: block;
+    filter: brightness(0.85) saturate(1.1);
+  }
+
+  .menu-photo-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    padding: 1.5rem 1rem 0.75rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--gold-light);
+  }
+
+  /* ── RSVP FORM ── */
+  .form-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 2.5rem;
+  }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media(max-width:560px) { .form-grid { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 400;
+  }
+
+  input, select, textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 2px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 12px 14px;
+    width: 100%;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+  }
+
+  select option { background: var(--deep2); color: var(--text); }
+
+  .divider {
+    border: none; border-top: 1px solid var(--card-border);
+    margin: 2rem 0;
+  }
+
+  .meal-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--gold-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .chicken-options {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem; margin-bottom: 1.5rem;
+  }
+
+  .chicken-card {
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .chicken-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .chicken-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.12); }
+
+  .chicken-card input[type=radio] {
+    position: absolute; opacity: 0; width: 0; height: 0;
+  }
+
+  .chicken-card .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--text); margin-bottom: 4px;
+  }
+
+  .chicken-card .card-desc {
+    font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;
+  }
+
+  .chicken-card .check {
+    position: absolute; top: 10px; right: 10px;
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .chicken-card.selected .check {
+    background: var(--gold); border-color: var(--gold);
+  }
+
+  .chicken-card.selected .check::after {
+    content: '';
+    width: 6px; height: 4px;
+    border-left: 2px solid var(--deep);
+    border-bottom: 2px solid var(--deep);
+    transform: rotate(-45deg) translate(1px, -1px);
+    display: block;
+  }
+
+  .sides-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem; margin-bottom: 1.5rem;
+  }
+
+  .side-item {
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .side-item:hover { border-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .side-item.selected { border-color: var(--gold); background: rgba(201,168,76,0.12); color: var(--gold-light); }
+
+  .side-item input[type=checkbox] { display: none; }
+
+  .side-box {
+    width: 16px; height: 16px; border-radius: 2px;
+    border: 1.5px solid var(--card-border);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .side-item.selected .side-box {
+    background: var(--gold); border-color: var(--gold);
+  }
+
+  .drinks-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .drink-card {
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .drink-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .drink-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.12); }
+  .drink-card input[type=radio] { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  .drink-card .drink-icon { font-size: 1.5rem; margin-bottom: 6px; }
+  .drink-card .drink-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+  .drink-card .drink-type { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+  .drink-card .check {
+    position: absolute; top: 10px; right: 10px;
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid var(--card-border);
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .drink-card.selected .check {
+    background: var(--gold); border-color: var(--gold);
+  }
+
+  .drink-card.selected .check::after {
+    content: '';
+    width: 5px; height: 3px;
+    border-left: 2px solid var(--deep);
+    border-bottom: 2px solid var(--deep);
+    transform: rotate(-45deg) translate(1px, -1px);
+    display: block;
+  }
+
+  .submit-btn {
+    margin-top: 2.5rem;
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: var(--deep);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .submit-btn:hover { background: var(--gold-light); }
+  .submit-btn:active { transform: scale(0.99); }
+
+  /* ── SUCCESS ── */
+  #success-screen {
+    display: none;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .success-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 1.8rem;
+  }
+
+  #success-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: var(--gold-light); margin-bottom: 1rem;
+  }
+
+  #success-screen p { color: var(--text-muted); font-size: 1rem; line-height: 1.8; }
+
+  /* ── ADMIN PANEL ── */
+  .admin-toggle {
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .admin-toggle a {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+
+  .admin-toggle a:hover { color: var(--gold); }
+
+  #admin-panel {
+    display: none;
+    max-width: 820px; margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+
+  .admin-panel-inner {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 2rem;
+  }
+
+  .admin-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--gold-light); margin-bottom: 2rem;
+  }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem; margin-bottom: 2rem;
+  }
+
+  .stat-box {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .stat-num { font-size: 2rem; font-weight: 500; color: var(--gold); }
+  .stat-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+
+  #rsvp-table {
+    width: 100%; border-collapse: collapse; font-size: 0.85rem;
+    margin-top: 1.5rem;
+  }
+
+  #rsvp-table th {
+    text-align: left; padding: 10px 12px;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 400;
+  }
+
+  #rsvp-table td {
+    padding: 12px 12px; border-bottom: 1px solid rgba(201,168,76,0.08);
+    color: var(--text-muted); vertical-align: top;
+  }
+
+  #rsvp-table tr:hover td { background: rgba(201,168,76,0.04); }
+
+  .clear-btn {
+    margin-top: 1.5rem;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(233,69,96,0.4);
+    color: rgba(233,69,96,0.7);
+    border-radius: 2px;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+
+  .clear-btn:hover { background: rgba(233,69,96,0.1); border-color: var(--accent); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--card-border);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in { animation: fadeUp 0.6s ease both; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:480px) {
+    .hero-details { gap: 1.5rem; }
+    .form-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">You are cordially invited</div>
+    <h1>Jeffrey's<br><em>Graduation</em></h1>
+    <p class="hero-subtitle">A celebration of achievement, family & good food</p>
+    <div class="hero-date">
+      <div class="line"></div>
+      <span>12 June 2026</span>
+      <div class="line right"></div>
+    </div>
+    <div class="hero-details">
+      <div class="hero-detail">
+        <span class="label">Venue</span>
+        <span class="value">+258 Taste of Mozambique, Fourways</span>
+      </div>
+      <div class="hero-detail">
+        <span class="label">Address</span>
+        <span class="value" style="font-size:0.85rem; text-align:center; max-width:220px; line-height:1.5;">Design Quarter, Shop 03, Corner Leslie Ave &amp; Winnie Mandela Dr, Fourways</span>
+      </div>
+      <div class="hero-detail">
+        <span class="label">Time</span>
+        <span class="value">Doors open 18:00</span>
+      </div>
+      <div class="hero-detail">
+        <span class="label">Closes</span>
+        <span class="value">22:00</span>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>RSVP below</span>
+      <div class="arrow"></div>
+    </div>
+  </div>
+
+  <!-- MENU SECTION -->
+  <section>
+    <p class="section-label">The Menu</p>
+    <h2 class="section-title">A taste of Mozambique</h2>
+    <p class="menu-intro">
+      We're celebrating with a feast of authentic Mozambican peri-peri chicken, 
+      paired with your choice of sides. Please select your meal preferences when you RSVP 
+      so we can prepare enough for everyone.
+    </p>
+
+    <div class="menu-photo">
+      <img src="/mnt/user-data/uploads/1779136686178_image.png" alt="Mozambican peri-peri chicken">
+      <div class="menu-photo-label">Peri-peri Chicken</div>
+    </div>
+  </section>
+
+  <!-- RSVP FORM -->
+  <section style="padding-top: 0;">
+    <p class="section-label">RSVP</p>
+    <h2 class="section-title">Confirm your attendance</h2>
+
+    <div id="rsvp-form-container">
+      <div class="form-card">
+        <form id="rsvp-form" novalidate>
+
+          <!-- Guest info -->
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fname">First name *</label>
+              <input type="text" id="fname" placeholder="Your first name" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name *</label>
+              <input type="text" id="lname" placeholder="Your last name" required>
+            </div>
+            <div class="form-group full">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" placeholder="+27 000 000 0000">
+            </div>
+            <div class="form-group full">
+              <label for="attending">Will you be attending? *</label>
+              <select id="attending" required>
+                <option value="">— Please select —</option>
+                <option value="yes">Yes, I'll be there! 🎉</option>
+                <option value="no">Unfortunately I can't make it</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Meal selection (shown when attending yes) -->
+          <div id="meal-section" style="display:none;">
+            <hr class="divider">
+            <p class="meal-section-title">Choose your chicken</p>
+
+            <div class="chicken-options">
+              <label class="chicken-card" onclick="selectChicken(this, 'peri-peri')">
+                <input type="radio" name="chicken" value="peri-peri">
+                <div class="check"></div>
+                <div class="card-name">Peri-Peri</div>
+                <div class="card-desc">Bold, fiery & authentic Mozambican spice</div>
+              </label>
+              <label class="chicken-card" onclick="selectChicken(this, 'lemon-herb')">
+                <input type="radio" name="chicken" value="lemon-herb">
+                <div class="check"></div>
+                <div class="card-name">Lemon & Herb</div>
+                <div class="card-desc">Light, zesty & beautifully aromatic</div>
+              </label>
+              <label class="chicken-card" onclick="selectChicken(this, 'mild')">
+                <input type="radio" name="chicken" value="mild">
+                <div class="check"></div>
+                <div class="card-name">Mild</div>
+                <div class="card-desc">Gentle heat — great for all palates</div>
+              </label>
+            </div>
+
+            <hr class="divider">
+            <p class="meal-section-title">Choose your side</p>
+
+            <div class="sides-grid" id="sides-grid">
+              <label class="side-item" onclick="selectSide(this)">
+                <input type="radio" value="pap" name="sides">
+                <div class="side-box"></div>
+                Pap
+              </label>
+              <label class="side-item" onclick="selectSide(this)">
+                <input type="radio" value="salad" name="sides">
+                <div class="side-box"></div>
+                Salad
+              </label>
+              <label class="side-item" onclick="selectSide(this)">
+                <input type="radio" value="rice" name="sides">
+                <div class="side-box"></div>
+                Rice
+              </label>
+              <label class="side-item" onclick="selectSide(this)">
+                <input type="radio" value="sweet-potato" name="sides">
+                <div class="side-box"></div>
+                Sweet baked potato
+              </label>
+              <label class="side-item" onclick="selectSide(this)">
+                <input type="radio" value="chips" name="sides">
+                <div class="side-box"></div>
+                Chips
+              </label>
+            </div>
+
+            <hr class="divider">
+            <p class="meal-section-title">Choose your drink</p>
+
+            <div class="drinks-grid">
+              <label class="drink-card" onclick="selectDrink(this, 'stella')">
+                <input type="radio" name="drink" value="stella">
+                <div class="check"></div>
+                <div class="drink-icon">🍺</div>
+                <div class="drink-name">Stella Artois</div>
+                <div class="drink-type">Draft beer</div>
+              </label>
+              <label class="drink-card" onclick="selectDrink(this, 'castle-lite')">
+                <input type="radio" name="drink" value="castle-lite">
+                <div class="check"></div>
+                <div class="drink-icon">🍺</div>
+                <div class="drink-name">Castle Lite</div>
+                <div class="drink-type">Draft beer</div>
+              </label>
+              <label class="drink-card" onclick="selectDrink(this, 'juice')">
+                <input type="radio" name="drink" value="juice">
+                <div class="check"></div>
+                <div class="drink-icon">🧃</div>
+                <div class="drink-name">Fruit Juice</div>
+                <div class="drink-type">Non-alcoholic</div>
+              </label>
+              <label class="drink-card" onclick="selectDrink(this, 'water')">
+                <input type="radio" name="drink" value="water">
+                <div class="check"></div>
+                <div class="drink-icon">💧</div>
+                <div class="drink-name">Still Water</div>
+                <div class="drink-type">Non-alcoholic</div>
+              </label>
+            </div>
+
+            <div class="form-group" style="margin-top:1.5rem;">
+              <label for="dietary">Dietary requirements or allergies</label>
+              <textarea id="dietary" rows="3" placeholder="Let us know if you have any dietary restrictions or allergies..."></textarea>
+            </div>
+          </div>
+
+          <div id="form-error" style="display:none; margin-top:1rem; padding:12px 14px; background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.3); border-radius:2px; color:#E94560; font-size:0.85rem;"></div>
+
+          <button type="submit" class="submit-btn">Confirm my RSVP →</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+      <div class="success-icon">🎓</div>
+      <h2>You're on the list!</h2>
+      <p id="success-msg">Thank you — Jeffrey can't wait to celebrate with you.<br>See you on <strong style="color:var(--gold-light);">12 June 2026</strong> at 18:00.</p>
+    </div>
+  </section>
+
+  <!-- ADMIN TOGGLE -->
+  <div class="admin-toggle">
+    <a href="#" onclick="toggleAdmin(); return false;">View guest list (host only)</a>
+  </div>
+
+  <div id="admin-panel">
+    <div class="admin-panel-inner">
+      <div class="admin-title">Guest Responses</div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num" id="stat-total">0</div>
+          <div class="stat-label">Total RSVPs</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-attending">0</div>
+          <div class="stat-label">Attending</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-declining">0</div>
+          <div class="stat-label">Declining</div>
+        </div>
+      </div>
+
+      <table id="rsvp-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Attending</th>
+            <th>Chicken</th>
+            <th>Side</th>
+            <th>Drink</th>
+            <th>Dietary</th>
+          </tr>
+        </thead>
+        <tbody id="rsvp-tbody">
+          <tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">No RSVPs yet</td></tr>
+        </tbody>
+      </table>
+
+      <button class="clear-btn" onclick="clearAll()">Clear all responses</button>
+    </div>
+  </div>
+
+  <footer>
+    <p style="margin-bottom:4px;">With love and gratitude — <span style="color:var(--gold);">Jeffrey</span></p>
+    <p>Jeffrey's Graduation Celebration &nbsp;·&nbsp; 12 June 2026</p>
+    <p style="margin-top:6px; font-size:0.75rem; color:var(--text-muted);">+258 Taste of Mozambique &nbsp;·&nbsp; Design Quarter Shopping Centre, Shop 03, Corner Leslie Avenue &amp; Winnie Mandela Drive, Fourways, Johannesburg, 2188</p>
+  </footer>
+
+</div>
+
+<script>
+  // ── Show/hide meal section based on attendance
+  document.getElementById('attending').addEventListener('change', function() {
+    const ms = document.getElementById('meal-section');
+    ms.style.display = this.value === 'yes' ? 'block' : 'none';
+  });
+
+  function selectChicken(el, val) {
+    document.querySelectorAll('.chicken-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function selectSide(el) {
+    document.querySelectorAll('.side-item').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+  }
+
+  function selectDrink(el, val) {
+    document.querySelectorAll('.drink-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  // ── RSVP submit
+  document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const errEl = document.getElementById('form-error');
+    errEl.style.display = 'none';
+
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const attending = document.getElementById('attending').value;
+
+    if (!fname || !lname || !attending) {
+      errEl.textContent = 'Please fill in all required fields.';
+      errEl.style.display = 'block'; return;
+    }
+
+    if (attending === 'yes') {
+      const chicken = document.querySelector('.chicken-card.selected');
+      const side = document.querySelector('.side-item.selected');
+      const drink = document.querySelector('.drink-card.selected');
+      if (!chicken) { errEl.textContent = 'Please choose your chicken style.'; errEl.style.display = 'block'; return; }
+      if (!side) { errEl.textContent = 'Please choose your side.'; errEl.style.display = 'block'; return; }
+      if (!drink) { errEl.textContent = 'Please choose your drink.'; errEl.style.display = 'block'; return; }
+    }
+
+    const sideEl = document.querySelector('.side-item.selected');
+    const chickenEl = document.querySelector('.chicken-card.selected');
+    const drinkEl = document.querySelector('.drink-card.selected');
+
+    const entry = {
+      name: fname + ' ' + lname,
+      phone: document.getElementById('phone').value.trim(),
+      attending,
+      chicken: chickenEl ? chickenEl.querySelector('.card-name').textContent : '—',
+      side: sideEl ? sideEl.textContent.trim() : '—',
+      drink: drinkEl ? drinkEl.querySelector('.drink-name').textContent : '—',
+      dietary: document.getElementById('dietary').value.trim() || '—',
+      timestamp: new Date().toLocaleString()
+    };
+
+    const all = JSON.parse(localStorage.getItem('jeffrey_rsvps') || '[]');
+    all.push(entry);
+    localStorage.setItem('jeffrey_rsvps', JSON.stringify(all));
+
+    document.getElementById('rsvp-form-container').style.display = 'none';
+    const suc = document.getElementById('success-screen');
+    suc.style.display = 'block';
+    if (attending === 'no') {
+      document.getElementById('success-msg').innerHTML = "We're sorry you can't make it, but thank you for letting Jeffrey know. Your support means a lot. 💛";
+    }
+  });
+
+  // ── Admin panel
+  function toggleAdmin() {
+    const panel = document.getElementById('admin-panel');
+    if (panel.style.display === 'block') { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    renderAdmin();
+  }
+
+  function renderAdmin() {
+    const all = JSON.parse(localStorage.getItem('jeffrey_rsvps') || '[]');
+    document.getElementById('stat-total').textContent = all.length;
+    document.getElementById('stat-attending').textContent = all.filter(r => r.attending === 'yes').length;
+    document.getElementById('stat-declining').textContent = all.filter(r => r.attending === 'no').length;
+
+    const tbody = document.getElementById('rsvp-tbody');
+    if (!all.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">No RSVPs yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = all.map(r => `
+      <tr>
+        <td style="color:var(--text);">${r.name}</td>
+        <td style="color:${r.attending==='yes' ? 'var(--gold)' : 'var(--accent)'};">${r.attending === 'yes' ? 'Attending' : 'Declining'}</td>
+        <td>${r.chicken}</td>
+        <td>${r.side}</td>
+        <td>${r.drink}</td>
+        <td>${r.dietary}</td>
+      </tr>`).join('');
+  }
+
+  function clearAll() {
+    if (confirm('Clear all RSVP responses? This cannot be undone.')) {
+      localStorage.removeItem('jeffrey_rsvps');
+      renderAdmin();
+    }
+  }
+</script>
+</body>
+</html>
