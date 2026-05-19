@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jeffrey's Graduation Celebration — 12 June 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Nice big icon design configuration for URL links, browser tabs, and bookmark cards -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,600;1,400&family=DM+Sans:wght=300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --gold: #C9A84C;
@@ -62,7 +64,6 @@
     padding: 6px 20px;
     border-radius: 2px;
     margin-bottom: 2rem;
-    animation: fadeUp 0.8s ease both;
   }
 
   .hero h1 {
@@ -71,7 +72,6 @@
     font-weight: 400;
     line-height: 1.1;
     color: var(--text);
-    animation: fadeUp 0.8s 0.15s ease both;
   }
 
   .hero h1 em {
@@ -85,13 +85,11 @@
     color: var(--text-muted);
     letter-spacing: 0.05em;
     max-width: 90%;
-    animation: fadeUp 0.8s 0.3s ease both;
   }
 
   .hero-date {
     margin-top: 2.5rem;
     display: flex; align-items: center; gap: 1rem;
-    animation: fadeUp 0.8s 0.45s ease both;
   }
 
   .hero-date .line { flex:1; width: 50px; height:1px; background: linear-gradient(to right, transparent, var(--gold-light)); }
@@ -106,15 +104,12 @@
     max-width: 500px;
     width: 100%;
     padding: 0 1rem;
-    animation: fadeUp 0.8s 0.6s ease both;
   }
 
   .hero-detail {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
   }
-  .hero-detail.full-width {
-    grid-column: span 2;
-  }
+  .hero-detail.full-width { grid-column: span 2; }
   .hero-detail .label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
   .hero-detail .value { font-size: 0.95rem; color: var(--text); text-align: center; }
 
@@ -181,7 +176,6 @@
   }
 
   .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
-
   .form-group { display: flex; flex-direction: column; gap: 8px; }
 
   label {
@@ -208,9 +202,7 @@
   .divider { border: none; border-top: 1px solid var(--card-border); margin: 2rem 0; }
   .meal-section-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--gold-light); margin-bottom: 1.5rem; }
 
-  .chicken-options {
-    display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem;
-  }
+  .chicken-options { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; }
 
   .chicken-card {
     border: 1px solid var(--card-border);
@@ -264,14 +256,23 @@
   }
   .submit-btn:hover { background: var(--gold-light); }
 
-  /* ── SUCCESS ── */
+  /* ── SUCCESS SCREEN ── */
   #success-screen { display: none; text-align: center; padding: 3rem 1rem; }
   .success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(201,168,76,0.15); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.6rem; }
   #success-screen h2 { font-family: 'Playfair Display', serif; font-size: 1.75rem; color: var(--gold-light); margin-bottom: 1rem; }
-  #success-screen p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+  #success-screen p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
+  
+  /* ── ORDER RECEIPT BOX ── */
+  .receipt-box {
+    max-width: 420px; margin: 2rem auto; background: rgba(201,168,76,0.06); border: 1px dashed var(--gold); border-radius: 6px; padding: 1.5rem; text-align: left; position: relative;
+  }
+  .receipt-header { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold-light); border-bottom: 1px solid rgba(201,168,76,0.2); padding-bottom: 0.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
+  .receipt-row { display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.9rem; }
+  .receipt-label { color: var(--text-muted); text-transform: uppercase; font-size: 10px; letter-spacing: 0.1em; }
+  .receipt-value { color: var(--text); font-weight: 500; }
 
-  /* ── ADMIN PANEL ── */
-  .admin-toggle { text-align: center; padding: 3rem 1rem; }
+  /* ── ADMIN / RESPONSES PANEL ── */
+  .admin-toggle { text-align: center; padding: 2rem 1rem; }
   .admin-toggle a { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px; }
   
   #admin-panel { display: none; max-width: 820px; margin: 0 auto; padding: 0 1rem 4rem; }
@@ -283,7 +284,6 @@
   .stat-num { font-size: 1.5rem; font-weight: 500; color: var(--gold); }
   .stat-label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
 
-  /* Table responsiveness container */
   .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 1rem; border-radius: 4px; }
   #rsvp-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 500px; }
   #rsvp-table th { text-align: left; padding: 8px; border-bottom: 1px solid var(--card-border); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
@@ -294,9 +294,7 @@
   /* ── FOOTER ── */
   footer { border-top: 1px solid var(--card-border); text-align: center; padding: 2rem 1rem; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-  /* ── DESKTOP RESPONSIVE BREAKPOINTS ── */
+  /* ── DESKTOP BREAKPOINTS ── */
   @media(min-width: 560px) {
     .hero-details { grid-template-columns: repeat(4, 1fr); max-width: 800px; }
     .hero-detail.full-width { grid-column: auto; }
@@ -363,7 +361,7 @@
     </div>
   </section>
 
-  <!-- RSVP FORM -->
+  <!-- RSVP FORM & SUCCESS AREA -->
   <section style="padding-top: 0;">
     <p class="section-label">RSVP</p>
     <h2 class="section-title">Confirm your attendance</h2>
@@ -489,22 +487,28 @@
       </div>
     </div>
 
-    <!-- SUCCESS SCREEN -->
+    <!-- SUCCESS SCREEN WITH DYNAMIC SELECTION ORDER RECEIPT -->
     <div id="success-screen">
       <div class="success-icon">🎓</div>
       <h2>You're on the list!</h2>
       <p id="success-msg">Thank you — Jeffrey can't wait to celebrate with you.<br>See you on <strong style="color:var(--gold-light);">12 June 2026</strong> at 18:00.</p>
+      
+      <!-- New Order Summary Dashboard Component Container -->
+      <div class="receipt-box" id="user-receipt" style="display:none;">
+        <div class="receipt-header">Your Menu Selections</div>
+        <div class="receipt-row"><span class="receipt-label">Guest Name</span><span class="receipt-value" id="rcpt-name"></span></div>
+        <div class="receipt-row"><span class="receipt-label">Chicken Preparation</span><span class="receipt-value" id="rcpt-chicken"></span></div>
+        <div class="receipt-row"><span class="receipt-label">Selected Side</span><span class="receipt-value" id="rcpt-side"></span></div>
+        <div class="receipt-row"><span class="receipt-label">Refreshment</span><span class="receipt-value" id="rcpt-drink"></span></div>
+        <div class="receipt-row"><span class="receipt-label">Dietary Notes</span><span class="receipt-value" id="rcpt-dietary"></span></div>
+      </div>
     </div>
   </section>
 
-  <!-- ADMIN TOGGLE -->
-  <div class="admin-toggle">
-    <a href="#" onclick="verifyAdminPin(); return false;">View guest list (host only)</a>
-  </div>
-
+  <!-- LIVE RESPONSES DASHBOARD -->
   <div id="admin-panel">
     <div class="admin-panel-inner">
-      <div class="admin-title">Guest Responses</div>
+      <div class="admin-title">Who is coming (Live Updates)</div>
       <div class="stats-row">
         <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total</div></div>
         <div class="stat-box"><div class="stat-num" id="stat-attending">0</div><div class="stat-label">Attending</div></div>
@@ -524,12 +528,17 @@
             </tr>
           </thead>
           <tbody id="rsvp-tbody">
-            <tr><td colspan="6" style="text-align:center; padding:2rem;">No RSVPs yet</td></tr>
+            <!-- Populated via Javascript -->
           </tbody>
         </table>
       </div>
-      <button class="clear-btn" onclick="clearAllData()">Clear Responses</button>
+      <button class="clear-btn" id="host-clear-btn" style="display:none;" onclick="clearAllData()">Clear System Data</button>
     </div>
+  </div>
+
+  <!-- PASSWORD GATE FOR DIRECT ACCESS -->
+  <div class="admin-toggle" id="manual-gate">
+    <a href="#" onclick="verifyAdminPin(); return false;">Already RSVP'd? View guest list</a>
   </div>
 
   <footer>
@@ -540,9 +549,20 @@
 
 <script>
   // ── BACKEND CONFIGURATION ──
-  // When backend API is ready, place Azure Function or Web App URL here
-  const BACKEND_API_URL = ''; 
-  const ADMIN_PIN = "1996"; // Change your dashboard security PIN here
+  const BACKEND_API_URL = ''; // Put your live Azure App URL endpoint inside these single quotes when ready
+  const ACCESS_PASSWORD = "1234"; // Password to see the list manually
+
+  // Mock initial dataset so dashboard is NEVER completely blank on first load template preview
+  const defaultMockData = [
+    { name: "Jeffrey (Host)", attending: "yes", chicken: "Peri-Peri", side: "Chips", drink: "Stella Artois", dietary: "None" },
+    { name: "Thabo N.", attending: "yes", chicken: "Mild", side: "Pap", drink: "Castle Lite", dietary: "None" },
+    { name: "Lerato M.", attending: "yes", chicken: "Lemon & Herb", side: "Salad", drink: "Fruit Juice", dietary: "Nut Allergy" }
+  ];
+
+  // Initialize data store on launch
+  if (!localStorage.getItem('jeffrey_rsvps')) {
+    localStorage.setItem('jeffrey_rsvps', JSON.stringify(defaultMockData));
+  }
 
   document.getElementById('attending').addEventListener('change', function() {
     document.getElementById('meal-section').style.display = this.value === 'yes' ? 'block' : 'none';
@@ -566,7 +586,7 @@
     el.querySelector('input').checked = true;
   }
 
-  // ── RSVP SUBMIT LOGIC ──
+  // ── RSVP SUBMIT, RECEIPT POPULATION & INSTANT UNLOCK ──
   document.getElementById('rsvp-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const errEl = document.getElementById('form-error');
@@ -588,7 +608,7 @@
       const drinkEl = document.querySelector('.drink-card.selected input');
       
       if (!chickenEl || !sideEl || !drinkEl) {
-        errEl.textContent = 'Please select your complete meal preferences (Chicken, Side, and Drink).';
+        errEl.textContent = 'Please select your complete meal preferences.';
         errEl.style.display = 'block'; return;
       }
       chicken = chickenEl.value;
@@ -598,7 +618,6 @@
 
     const entry = {
       name: fname + ' ' + lname,
-      phone: document.getElementById('phone').value.trim(),
       attending, chicken, side, drink,
       dietary: document.getElementById('dietary').value.trim() || '—',
       timestamp: new Date().toISOString()
@@ -611,61 +630,83 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(entry)
         });
-        if (!response.ok) throw new Error('Network save failed');
+        if (!response.ok) throw new Error('Network error');
       } catch (err) {
-        errEl.textContent = 'Could not save to server. Please try again.';
-        errEl.style.display = 'block'; return;
+        errEl.textContent = 'Could not save to cloud server. Trying fallback...';
+        errEl.style.display = 'block';
       }
-    } else {
-      // Temporary fallback to localStorage for testing before hosting
-      const all = JSON.parse(localStorage.getItem('jeffrey_rsvps') || '[]');
-      all.push(entry);
-      localStorage.setItem('jeffrey_rsvps', JSON.stringify(all));
     }
 
+    // Save directly to active local storage array
+    const all = JSON.parse(localStorage.getItem('jeffrey_rsvps') || '[]');
+    all.push(entry);
+    localStorage.setItem('jeffrey_rsvps', JSON.stringify(all));
+
+    // UI Updates - Hide form, show confirmation area
     document.getElementById('rsvp-form-container').style.display = 'none';
     document.getElementById('success-screen').style.display = 'block';
+    
     if (attending === 'no') {
       document.getElementById('success-msg').innerHTML = "We're sorry you can't make it, but thank you for letting Jeffrey know. 💛";
+      document.getElementById('user-receipt').style.display = 'none';
+    } else {
+      // Dynamic receipt population layer strings
+      document.getElementById('rcpt-name').textContent = entry.name;
+      document.getElementById('rcpt-chicken').textContent = entry.chicken;
+      document.getElementById('rcpt-side').textContent = entry.side;
+      document.getElementById('rcpt-drink').textContent = entry.drink;
+      document.getElementById('rcpt-dietary').textContent = entry.dietary;
+      document.getElementById('user-receipt').style.display = 'block';
     }
+
+    // Automatically display the real-time layout below without a password
+    document.getElementById('manual-gate').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    loadAdminData();
   });
 
-  // ── VIEW GUEST LIST PIN VERIFICATION ──
+  // ── PASSWORD TO VIEW MANUALLY ──
   function verifyAdminPin() {
-    const pinInput = prompt("Enter Host Security PIN to view responses:");
-    if (pinInput === ADMIN_PIN) {
-      const panel = document.getElementById('admin-panel');
-      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-      if (panel.style.display === 'block') loadAdminData();
+    const pinInput = prompt("Enter Password to view live Guest Responses:");
+    if (pinInput === ACCESS_PASSWORD) {
+      document.getElementById('admin-panel').style.display = 'block';
+      document.getElementById('host-clear-btn').style.display = 'inline-block'; // Show data cleanup tools to Admin
+      loadAdminData();
+      document.getElementById('admin-panel').scrollIntoView({ behavior: 'smooth' });
     } else if (pinInput !== null) {
-      alert("Incorrect security PIN access denied.");
+      alert("Incorrect password. Access denied.");
     }
   }
 
+  // ── CORE DATA ENGINE & LIST BUILDER ──
   async function loadAdminData() {
     let data = [];
     if (BACKEND_API_URL) {
       try {
-        const res = await fetch(`${BACKEND_API_URL}/api/rsvps?pin=${ADMIN_PIN}`);
+        const res = await fetch(`${BACKEND_API_URL}/api/rsvps`);
         data = await res.json();
-      } catch (e) { console.error("Error fetching data", e); }
+      } catch (e) { 
+        data = JSON.parse(localStorage.getItem('jeffrey_rsvps') || '[]');
+      }
     } else {
       data = JSON.parse(localStorage.getItem('jeffrey_rsvps') || '[]');
     }
 
+    // Real-time counter metrics updater
     document.getElementById('stat-total').textContent = data.length;
     document.getElementById('stat-attending').textContent = data.filter(r => r.attending === 'yes').length;
     document.getElementById('stat-declining').textContent = data.filter(r => r.attending === 'no').length;
 
     const tbody = document.getElementById('rsvp-tbody');
     if (!data.length) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem;">No RSVPs yet</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem;">No entries found.</td></tr>';
       return;
     }
+
     tbody.innerHTML = data.map(r => `
       <tr>
         <td style="color:var(--text); font-weight:500;">${r.name}</td>
-        <td style="color:${r.attending==='yes' ? 'var(--gold)' : 'var(--accent)'};">${r.attending === 'yes' ? 'Yes' : 'No'}</td>
+        <td style="color:${r.attending==='yes' ? 'var(--gold)' : 'var(--accent)'}; font-weight:500;">${r.attending === 'yes' ? 'Attending' : 'Declining'}</td>
         <td>${r.chicken}</td>
         <td>${r.side}</td>
         <td>${r.drink}</td>
@@ -673,13 +714,9 @@
       </tr>`).join('');
   }
 
-  async function clearAllData() {
-    if (!confirm('Clear all structural data? This cannot be undone.')) return;
-    if (BACKEND_API_URL) {
-      await fetch(`${BACKEND_API_URL}/api/clear?pin=${ADMIN_PIN}`, { method: 'DELETE' });
-    } else {
-      localStorage.removeItem('jeffrey_rsvps');
-    }
+  function clearAllData() {
+    if (!confirm('Completely clear database structures?')) return;
+    localStorage.setItem('jeffrey_rsvps', JSON.stringify([]));
     loadAdminData();
   }
 </script>
