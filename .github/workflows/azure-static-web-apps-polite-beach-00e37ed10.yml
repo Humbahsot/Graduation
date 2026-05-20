@@ -27,10 +27,10 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           ###### Optimized Repository/Build Configurations ######
-          app_location: "/"                # Serves HTML pages directly from the root
-          api_location: "api-rsvp.js"     # Binds our serverless API script directly
+          app_location: "/"                # Serves index.html & dashboard.html from root
+          api_location: "/"                # Reads package.json, host.json, & function.json from root
           output_location: ""              # Left blank for flat assets
-          skip_app_build: true             # Completely bypasses the Oryx engine error
+          skip_app_build: false            # Set to false so Azure natively builds dependencies
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
