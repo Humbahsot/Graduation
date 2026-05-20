@@ -5,7 +5,7 @@ const tableClient = TableClient.fromConnectionString(connectionString, "rsvps");
 
 module.exports = async function (context, req) {
     if (!connectionString) {
-        context.res = { status: 500, body: "Error: AZURE_STORAGE_CONNECTION_STRING is missing." };
+        context.res = { status: 500, body: "Error: AZURE_STORAGE_CONNECTION_STRING is unconfigured." };
         return;
     }
 
@@ -17,7 +17,6 @@ module.exports = async function (context, req) {
                 return;
             }
 
-            // Remove disallowed character spaces inside Table Storage RowKey structures
             const cleanRowKey = data.name.replace(/[\/\?#\\\t\n\r]/g, "").trim();
 
             const entity = {
@@ -59,7 +58,7 @@ module.exports = async function (context, req) {
             };
         }
     } catch (error) {
-        context.log.error("Storage structural operation failed:", error);
+        context.log.error("Storage transactional update execution failed:", error);
         context.res = { status: 500, body: `Internal Server Fault: ${error.message}` };
     }
 };
