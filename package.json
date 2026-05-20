@@ -1,6 +1,9 @@
 {
   "name": "graduation-rsvp",
   "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'No frontend compilation required'"
+  },
   "dependencies": {
     "@azure/data-tables": "^13.2.2"
   }
