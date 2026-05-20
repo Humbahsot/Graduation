@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Host RSVP Live Tracking Engine Dashboard</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=0,500;0,600&family=DM+Sans:wght=400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --gold: #C9A84C;
@@ -63,4 +63,131 @@
 </head>
 <body>
 <div class="container">
-  <header
+  <header>
+    <div class="title-area">
+      <h1>Graduation Guest Tracker</h1>
+      <p>Live RSVP monitoring dashboard for Jeffrey's Celebration · 12 June 2026</p>
+    </div>
+    <div class="actions-row">
+      <button class="btn-outline" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn-primary" onclick="loadDashboardData()">Refresh Data</button>
+    </div>
+  </header>
+
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="num gold" id="m-total">0</div><div class="lbl">Total Responses</div></div>
+    <div class="metric-card"><div class="num success" id="m-yes">0</div><div class="lbl">Attending</div></div>
+    <div class="metric-card"><div class="num accent" id="m-no">0</div><div class="lbl">Declined</div></div>
+    <div class="metric-card"><div class="num" id="m-meals">0</div><div class="lbl">Catering Placements</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Guest Master Registry</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Guest Name</th>
+            <th>Attendance Status</th>
+            <th>Chicken Option</th>
+            <th>Side Dish Choice</th>
+            <th>Drink Request</th>
+            <th>Dietary Restrictions</th>
+          </tr>
+        </thead>
+        <tbody id="dashboard-tbody">
+          <tr><td colspan="6" style="text-align:center; padding: 2rem;">Loading data from database...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = loadDashboardData;
+  async function loadDashboardData() {
+    let dataset = [];
+    const tbody = document.getElementById('dashboard-tbody');
+    
+    try {
+      const response = await fetch('/api/rsvp');
+      if (response.ok) {
+        dataset = await response.json();
+      } else {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 2rem; color: var(--accent);">Error: Backend responded with status ${response.status}</td></tr>`;
+        return;
+      }
+    } catch (e) {
+      console.error("Failed fetching live records from data tier.", e);
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 2rem; color: var(--accent);">Network error connecting to storage.</td></tr>`;
+      return;
+    }
+
+    if (!dataset || !dataset.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 3rem; color:var(--text-muted);">No guest registration records found inside Table Storage.</td></tr>';
+      document.getElementById('m-total').textContent = '0';
+      document.getElementById('m-yes').textContent = '0';
+      document.getElementById('m-no').textContent = '0';
+      document.getElementById('m-meals').textContent = '0';
+      return;
+    }
+
+    const getValue = (obj, key) => {
+      if (!obj) return '';
+      const upperKey = key.charAt(0).toUpperCase() + key.slice(1);
+      const lowerKey = key.toLowerCase();
+      if (obj[upperKey] !== undefined) return obj[upperKey];
+      if (obj[lowerKey] !== undefined) return obj[lowerKey];
+      return '';
+    };
+
+    const totalCount = dataset.length;
+    const attendingCount = dataset.filter(r => {
+      const status = String(getValue(r, 'attending')).toLowerCase().trim();
+      return status === 'yes' || status === 'attending';
+    }).length;
+    const decliningCount = totalCount - attendingCount;
+
+    document.getElementById('m-total').textContent = totalCount;
+    document.getElementById('m-yes').textContent = attendingCount;
+    document.getElementById('m-no').textContent = decliningCount;
+    document.getElementById('m-meals').textContent = attendingCount;
+
+    dataset.sort((a, b) => {
+      const statusA = String(getValue(a, 'attending')).toLowerCase();
+      const statusB = String(getValue(b, 'attending')).toLowerCase();
+      return statusB.localeCompare(statusA);
+    });
+
+    tbody.innerHTML = dataset.map(row => {
+      const name = getValue(row, 'name') || getValue(row, 'rowKey') || 'Unknown Guest';
+      const rawStatus = String(getValue(row, 'attending')).toLowerCase().trim();
+      
+      const statusBadge = (rawStatus === 'yes' || rawStatus === 'attending')
+        ? `<span class="badge badge-yes">Attending</span>`
+        : `<span class="badge badge-no">Declined</span>`;
+        
+      const chicken = getValue(row, 'chicken') || '—';
+      const side = getValue(row, 'side') || '—';
+      const drink = getValue(row, 'drink') || '—';
+      const dietary = getValue(row, 'dietary') || '—';
+      
+      const dietaryColor = (dietary !== '—' && dietary.toLowerCase() !== 'none') 
+        ? 'var(--gold)' 
+        : 'var(--text-muted)';
+
+      return `
+        <tr>
+          <td style="font-weight: 500; color: var(--text);">${name}</td>
+          <td>${statusBadge}</td>
+          <td>${chicken}</td>
+          <td>${side}</td>
+          <td>${drink}</td>
+          <td style="color: ${dietaryColor}">${dietary}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+</script>
+</body>
+</html>
