@@ -29,8 +29,8 @@ jobs:
           ###### Optimized Repository/Build Configurations ######
           app_location: "/"                # Serves index.html & dashboard.html from root
           api_location: "/"                # Reads package.json, host.json, & function.json from root
-          output_location: ""              # Left blank for flat assets
-          skip_app_build: false            # Set to false so Azure natively builds dependencies
+          output_location: "/"             # Fixes artifact error by deploying directly from root
+          skip_app_build: false            # Allows Azure to natively build your Node.js dependencies
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
