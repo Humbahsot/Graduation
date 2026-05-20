@@ -109,11 +109,9 @@
     let dataset = [];
     try {
       const response = await fetch('/api/rsvp');
-      if (response.ok) {
-        dataset = await response.json();
-      }
+      if (response.ok) dataset = await response.json();
     } catch (e) {
-      console.error("Failed fetching live data records from API layer", e);
+      console.error("Failed fetching live records from data tier.", e);
     }
 
     const totalCount = dataset.length;
