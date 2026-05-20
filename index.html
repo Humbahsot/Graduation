@@ -89,6 +89,7 @@
     width: 100%;
     padding: 0 1rem;
   }
+  .hero-details a { color: inherit; text-decoration: none; }
   .hero-detail { display: flex; flex-direction: column; align-items: center; gap: 4px; }
   .hero-detail.full-width { grid-column: span 2; }
   .hero-detail .label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
@@ -236,102 +237,4 @@
             <hr class="divider">
             <p class="meal-section-title">Choose your side</p>
             <div class="sides-grid">
-              <label class="side-item" onclick="selectSide(this)"><input type="radio" value="Pap" name="sides"><div class="side-box"></div>Pap</label>
-              <label class="side-item" onclick="selectSide(this)"><input type="radio" value="Salad" name="sides"><div class="side-box"></div>Salad</label>
-              <label class="side-item" onclick="selectSide(this)"><input type="radio" value="Rice" name="sides"><div class="side-box"></div>Rice</label>
-              <label class="side-item" onclick="selectSide(this)"><input type="radio" value="Sweet Potato" name="sides"><div class="side-box"></div>Sweet Potato</label>
-              <label class="side-item" onclick="selectSide(this)"><input type="radio" value="Chips" name="sides"><div class="side-box"></div>Chips</label>
-            </div>
-            <hr class="divider">
-            <p class="meal-section-title">Choose your drink</p>
-            <div class="drinks-grid">
-              <label class="drink-card" onclick="selectDrink(this)"><input type="radio" name="drink" value="Stella Artois"><div class="check"></div><div class="drink-icon">🍺</div><div class="drink-name">Stella Artois</div><div class="drink-type">Beer</div></label>
-              <label class="drink-card" onclick="selectDrink(this)"><input type="radio" name="drink" value="Castle Lite"><div class="check"></div><div class="drink-icon">🍺</div><div class="drink-name">Castle Lite</div><div class="drink-type">Beer</div></label>
-              <label class="drink-card" onclick="selectDrink(this)"><input type="radio" name="drink" value="Fruit Juice"><div class="check"></div><div class="drink-icon">🧃</div><div class="drink-name">Fruit Juice</div><div class="drink-type">Juice</div></label>
-              <label class="drink-card" onclick="selectDrink(this)"><input type="radio" name="drink" value="Still Water"><div class="check"></div><div class="drink-icon">💧</div><div class="drink-name">Still Water</div><div class="drink-type">Water</div></label>
-            </div>
-            <div class="form-group" style="margin-top:1.5rem;"><label for="dietary">Dietary requirements</label><textarea id="dietary" rows="2" placeholder="Any allergies or restrictions..."></textarea></div>
-          </div>
-          <div id="form-error" style="display:none; margin-top:1rem; padding:12px; background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.3); border-radius:2px; color:#E94560; font-size:0.85rem;"></div>
-          <button type="submit" class="submit-btn">Confirm my RSVP →</button>
-        </form>
-      </div>
-    </div>
-    <div id="success-screen">
-      <div class="success-icon">🎓</div>
-      <h2>You're on the list!</h2>
-      <p id="success-msg">Thank you — Jeffrey can't wait to celebrate with you.<br>See you on <strong style="color:var(--gold-light);">12 June 2026</strong> at 18:00.</p>
-      <div class="receipt-box" id="user-receipt" style="display:none;">
-        <div class="receipt-header">Your Menu Selections</div>
-        <div class="receipt-row"><span class="receipt-label">Guest Name</span><span class="receipt-value" id="rcpt-name"></span></div>
-        <div class="receipt-row"><span class="receipt-label">Chicken Preparation</span><span class="receipt-value" id="rcpt-chicken"></span></div>
-        <div class="receipt-row"><span class="receipt-label">Selected Side</span><span class="receipt-value" id="rcpt-side"></span></div>
-        <div class="receipt-row"><span class="receipt-label">Refreshment</span><span class="receipt-value" id="rcpt-drink"></span></div>
-        <div class="receipt-row"><span class="receipt-label">Dietary Notes</span><span class="receipt-value" id="rcpt-dietary"></span></div>
-      </div>
-    </div>
-  </section>
-  <footer>
-    <p>With love and gratitude — <span style="color:var(--gold);">Jeffrey</span></p>
-    <p>Jeffrey's Graduation Celebration &middot; 12 June 2026</p>
-  </footer>
-</div>
-<script>
-  document.getElementById('attending').addEventListener('change', function() {
-    document.getElementById('meal-section').style.display = this.value === 'yes' ? 'block' : 'none';
-  });
-  function selectChicken(el) { document.querySelectorAll('.chicken-card').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); el.querySelector('input').checked = true; }
-  function selectSide(el) { document.querySelectorAll('.side-item').forEach(s => s.classList.remove('selected')); el.classList.add('selected'); el.querySelector('input').checked = true; }
-  function selectDrink(el) { document.querySelectorAll('.drink-card').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); el.querySelector('input').checked = true; }
-
-  document.getElementById('rsvp-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const errEl = document.getElementById('form-error'); errEl.style.display = 'none';
-    const fname = document.getElementById('fname').value.trim();
-    const lname = document.getElementById('lname').value.trim();
-    const attending = document.getElementById('attending').value;
-
-    if (!fname || !lname || !attending) { errEl.textContent = 'Please fill in all required fields.'; errEl.style.display = 'block'; return; }
-
-    let chicken = '—', side = '—', drink = '—';
-    if (attending === 'yes') {
-      const chickenEl = document.querySelector('.chicken-card.selected input');
-      const sideEl = document.querySelector('.side-item.selected input');
-      const drinkEl = document.querySelector('.drink-card.selected input');
-      if (!chickenEl || !sideEl || !drinkEl) { errEl.textContent = 'Please select your complete meal preferences.'; errEl.style.display = 'block'; return; }
-      chicken = chickenEl.value; side = sideEl.value; drink = drinkEl.value;
-    }
-
-    const entry = {
-      name: fname + ' ' + lname, attending, chicken, side, drink,
-      dietary: document.getElementById('dietary').value.trim() || '—'
-    };
-
-    try {
-      // Azure SWA routes requests inside the /api domain automatically
-      const response = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(entry)
-      });
-      if (!response.ok) throw new Error('Network error logging RSVP.');
-    } catch (err) {
-      console.warn('API error, reverting to browser storage fallback.', err);
-    }
-
-    document.getElementById('rsvp-form-container').style.display = 'none';
-    document.getElementById('success-screen').style.display = 'block';
-    if (attending === 'no') {
-      document.getElementById('success-msg').innerHTML = "We're sorry you can't make it, but thank you for letting Jeffrey know. 💛";
-    } else {
-      document.getElementById('rcpt-name').textContent = entry.name;
-      document.getElementById('rcpt-chicken').textContent = entry.chicken;
-      document.getElementById('rcpt-side').textContent = entry.side;
-      document.getElementById('rcpt-drink').textContent = entry.drink;
-      document.getElementById('rcpt-dietary').textContent = entry.dietary;
-      document.getElementById('user-receipt').style.display = 'block';
-    }
-  });
-</script>
-</body>
-</html>
+              <label class="side-item" onclick="selectSide(this)"><input type="radio" value="Pap" name="sides"><div class="side-
