@@ -1,21 +1,31 @@
 const { TableClient } = require("@azure/data-tables");
 
-module.exports = async function (context, req) {
-    const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const tableClient = TableClient.fromConnectionString(connectionString, "rsvps");
 
-    // 1. Gracefully catch missing connection strings without crashing the server
+module.exports = async function (context, req) {
     if (!connectionString) {
-        context.res = { 
-            status: 500, 
-            body: "Error: AZURE_STORAGE_CONNECTION_STRING is unconfigured in the Azure Environment Variables." 
-        };
+        context.res = { status: 500, body: "Error: AZURE_STORAGE_CONNECTION_STRING is unconfigured." };
         return;
     }
 
-    // 2. Only initialize the table client AFTER verifying the string exists
-    const tableClient = TableClient.fromConnectionString(connectionString, "rsvps");
-
     try {
+        // GET Request: Fetch all RSVPs for the dashboard
+        if (req.method === 'GET') {
+            const entities = [];
+            const iterator = tableClient.listEntities();
+            for await (const entity of iterator) {
+                entities.push(entity);
+            }
+            context.res = {
+                status: 200,
+                headers: { "Content-Type": "application/json" },
+                body: entities
+            };
+            return;
+        }
+
+        // POST Request: Process and save new RSVP submission
         if (req.method === 'POST') {
             const data = req.body;
             if (!data || !data.name) {
@@ -23,36 +33,25 @@ module.exports = async function (context, req) {
                 return;
             }
 
-            const cleanRowKey = data.name.replace(/([\/\\?#\t\n\r])/g, "").trim();
+            const cleanRowKey = data.name.replace(/[\/\\?#\t\n\r]/g, "").trim();
 
             const entity = {
                 partitionKey: "Graduation2026",
                 rowKey: cleanRowKey,
-                email: data.email || "",
-                attending: data.attending || "No",
-                guests: data.guests || "0",
-                dietary: data.dietary || ""
+                name: data.name,
+                attending: data.attending,
+                chicken: data.chicken || "—",
+                side: data.side || "—",
+                drink: data.drink || "—",
+                dietary: data.dietary || "—"
             };
 
-            await tableClient.createEntity(entity);
-            context.res = { status: 200, body: "RSVP submitted successfully!" };
-
-        } else if (req.method === 'GET') {
-            const entities = [];
-            const iterator = tableClient.listEntities();
-            
-            for await (const entity of iterator) {
-                entities.push(entity);
-            }
-
-            context.res = {
-                status: 200,
-                headers: { "Content-Type": "application/json" },
-                body: entities
-            };
+            await tableClient.upsertEntity(entity, "Replace");
+            context.res = { status: 200, body: "RSVP recorded successfully." };
+            return;
         }
-    } catch (error) {
-        context.log("Database Error:", error.message);
-        context.res = { status: 500, body: "Internal Server Database Error: " + error.message };
+    } catch (err) {
+        context.log.error("Storage tier fault context:", err);
+        context.res = { status: 500, body: `Execution fault: ${err.message}` };
     }
 };
