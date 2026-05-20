@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host RSVP Live Tracking Engine Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --deep: #0B0F19;
+    --deep2: #111827;
+    --text: #F9FAFB;
+    --text-muted: #9CA3AF;
+    --accent: #EF4444;
+    --success: #10B981;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding: 2rem 1rem; }
+  .container { max-width: 1024px; margin: 0 auto; }
+  header { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+  @media(min-width: 600px) { header { flex-direction: row; justify-content: space-between; align-items: center; } }
+  .title-area h1 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--gold); }
+  .title-area p { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+  .actions-row { display: flex; gap: 10px; }
+  button { padding: 10px 16px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; cursor: pointer; border: none; }
+  .btn-primary { background: var(--gold); color: var(--deep); }
+  .btn-primary:hover { background: #E8D5A3; }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { background: rgba(255,255,255,0.05); }
+  .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  @media(min-width: 768px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
+  .metric-card { background: var(--deep2); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; text-align: center; }
+  .metric-card .num { font-size: 2.25rem; font-weight: 700; color: var(--text); line-height: 1.1; }
+  .metric-card .num.gold { color: var(--gold); }
+  .metric-card .num.success { color: var(--success); }
+  .metric-card .num.accent { color: var(--accent); }
+  .metric-card .lbl { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; font-weight: 500; }
+  .panel { background: var(--deep2); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; margin-bottom: 2rem; }
+  .panel-title { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; font-weight: 600; }
+  .table-wrapper { width: 100%; overflow-x: auto; border-radius: 4px; }
+  table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; min-width: 600px; }
+  th { padding: 12px; background: rgba(255,255,255,0.02); border-bottom: 2px solid var(--border); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  td { padding: 12px; border-bottom: 1px solid var(--border); color: #D1D5DB; }
+  tr:hover td { background: rgba(255,255,255,0.01); }
+  .badge { display: inline-block; padding: 4px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; border-radius: 4px; letter-spacing: 0.05em; }
+  .badge-yes { background: rgba(16,185,129,0.15); color: var(--success); }
+  .badge-no { background: rgba(239,68,68,0.15); color: var(--accent); }
+  @media print {
+    body { background: white; color: black; padding: 0; }
+    .metrics-grid, .actions-row, .panel-title { display: none !important; }
+    .panel { border: none; padding: 0; }
+    th { background: #f3f4f6 !important; color: black !important; border-bottom: 2px solid #000 !important; }
+    td { color: black !important; border-bottom: 1px solid #ccc !important; }
+    .title-area h1 { color: black !important; }
+    .badge { background: transparent !important; padding: 0; font-weight: bold; }
+    .badge-yes { color: green !important; }
+    .badge-no { color: red !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="title-area">
+      <h1>Graduation Guest Tracker</h1>
+      <p>Live RSVP monitoring dashboard for Jeffrey's Celebration · 12 June 2026</p>
+    </div>
+    <div class="actions-row">
+      <button class="btn-outline" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn-primary" onclick="loadDashboardData()">Refresh Data</button>
+    </div>
+  </header>
+
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="num gold" id="m-total">0</div><div class="lbl">Total Responses</div></div>
+    <div class="metric-card"><div class="num success" id="m-yes">0</div><div class="lbl">Attending (Guests)</div></div>
+    <div class="metric-card"><div class="num accent" id="m-no">0</div><div class="lbl">Declined</div></div>
+    <div class="metric-card"><div class="num" id="m-meals">0</div><div class="lbl">Catering Placements</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Guest Master Registry</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Guest Name</th>
+            <th>Attendance Status</th>
+            <th>Chicken Option</th>
+            <th>Side Dish Choice</th>
+            <th>Drink Request</th>
+            <th>Dietary Restrictions</th>
+          </tr>
+        </thead>
+        <tbody id="dashboard-tbody">
+          <tr><td colspan="6" style="text-align:center; padding: 2rem;">Loading data from database...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = loadDashboardData;
+  async function loadDashboardData() {
+    let dataset = [];
+    try {
+      const response = await fetch('/api/rsvp');
+      if (response.ok) {
+        dataset = await response.json();
+      }
+    } catch (e) {
+      console.error("Failed fetching live data records from API layer", e);
+    }
+
+    const totalCount = dataset.length;
+    const attendingCount = dataset.filter(r => r.attending === 'yes').length;
+    const decliningCount = dataset.filter(r => r.attending === 'no').length;
+
+    document.getElementById('m-total').textContent = totalCount;
+    document.getElementById('m-yes').textContent = attendingCount;
+    document.getElementById('m-no').textContent = decliningCount;
+    document.getElementById('m-meals').textContent = attendingCount;
+
+    const tbody = document.getElementById('dashboard-tbody');
+    if (!dataset.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 3rem; color:var(--text-muted);">No guest registration records found inside Table Storage.</td></tr>';
+      return;
+    }
+
+    dataset.sort((a, b) => b.attending.localeCompare(a.attending));
+
+    tbody.innerHTML = dataset.map(row => {
+      const statusBadge = row.attending === 'yes'
+        ? `<span class="badge badge-yes">Attending</span>`
+        : `<span class="badge badge-no">Declined</span>`;
+      return `
+        <tr>
+          <td style="font-weight: 500; color: var(--text);">${row.name}</td>
+          <td>${statusBadge}</td>
+          <td>${row.chicken || '—'}</td>
+          <td>${row.side || '—'}</td>
+          <td>${row.drink || '—'}</td>
+          <td style="color: ${row.dietary !== '—' && row.dietary !== 'None' ? 'var(--gold)' : 'var(--text-muted)'}">${row.dietary}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+</script>
+</body>
+</html>
