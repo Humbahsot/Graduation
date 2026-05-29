@@ -21,18 +21,21 @@ jobs:
           submodules: true
           lfs: false
 
+      - name: Install API dependencies
+        run: |
+          cd api
+          npm install
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_BEACH_00E37ED10_POLITE_BEACH_00E37ED10 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          
-          ###### Pipeline Targets Location Configurations ######
-          app_location: "/"          
-          api_location: "api"        
-          output_location: ""        
+          app_location: "/"
+          api_location: "api"
+          output_location: ""
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -43,5 +46,5 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_BEACH_00E37ED10 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: "close"
