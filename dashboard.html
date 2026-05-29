@@ -132,18 +132,9 @@
       return;
     }
 
-    const getValue = (obj, key) => {
-      if (!obj) return '';
-      const upperKey = key.charAt(0).toUpperCase() + key.slice(1);
-      const lowerKey = key.toLowerCase();
-      if (obj[upperKey] !== undefined) return obj[upperKey];
-      if (obj[lowerKey] !== undefined) return obj[lowerKey];
-      return '';
-    };
-
     const totalCount = dataset.length;
     const attendingCount = dataset.filter(r => {
-      const status = String(getValue(r, 'attending')).toLowerCase().trim();
+      const status = String(r.attending).toLowerCase().trim();
       return status === 'yes' || status === 'attending';
     }).length;
     const decliningCount = totalCount - attendingCount;
@@ -154,23 +145,23 @@
     document.getElementById('m-meals').textContent = attendingCount;
 
     dataset.sort((a, b) => {
-      const statusA = String(getValue(a, 'attending')).toLowerCase();
-      const statusB = String(getValue(b, 'attending')).toLowerCase();
+      const statusA = String(a.attending).toLowerCase();
+      const statusB = String(b.attending).toLowerCase();
       return statusB.localeCompare(statusA);
     });
 
     tbody.innerHTML = dataset.map(row => {
-      const name = getValue(row, 'name') || getValue(row, 'rowKey') || 'Unknown Guest';
-      const rawStatus = String(getValue(row, 'attending')).toLowerCase().trim();
+      const name = row.name || 'Unknown Guest';
+      const rawStatus = String(row.attending).toLowerCase().trim();
       
       const statusBadge = (rawStatus === 'yes' || rawStatus === 'attending')
         ? `<span class="badge badge-yes">Attending</span>`
         : `<span class="badge badge-no">Declined</span>`;
         
-      const chicken = getValue(row, 'chicken') || '—';
-      const side = getValue(row, 'side') || '—';
-      const drink = getValue(row, 'drink') || '—';
-      const dietary = getValue(row, 'dietary') || '—';
+      const chicken = row.chicken || '—';
+      const side = row.side || '—';
+      const drink = row.drink || '—';
+      const dietary = row.dietary || '—';
       
       const dietaryColor = (dietary !== '—' && dietary.toLowerCase() !== 'none') 
         ? 'var(--gold)' 
