@@ -1,83 +1,139 @@
 const { TableClient } = require("@azure/data-tables");
 
-const connectionString = process.env.AzureWebJobsStorage;
-const tableName = "GuestRSVPs";
-const tableClient = TableClient.fromConnectionString(connectionString, tableName);
+const CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const TABLE_NAME = "GuestRSVPs";
+
+function getCorsHeaders() {
+  return {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+  };
+}
 
 module.exports = async function (context, req) {
-    const method = req.method.toLowerCase();
+  const method = req.method.toUpperCase();
 
+  // Handle CORS preflight
+  if (method === "OPTIONS") {
+    context.res = { status: 204, headers: getCorsHeaders(), body: "" };
+    return;
+  }
+
+  // Guard: connection string must exist
+  if (!CONNECTION_STRING) {
+    context.log.error("AZURE_STORAGE_CONNECTION_STRING environment variable is not set.");
+    context.res = {
+      status: 500,
+      headers: getCorsHeaders(),
+      body: JSON.stringify({ error: "Storage connection string is not configured." })
+    };
+    return;
+  }
+
+  let tableClient;
+  try {
+    tableClient = TableClient.fromConnectionString(CONNECTION_STRING, TABLE_NAME);
+    await tableClient.createTable();
+  } catch (e) {
+    // 409 = table already exists, that's fine
+    if (e.statusCode !== 409) {
+      context.log.error("Table initialization failed:", e.message);
+      context.res = {
+        status: 500,
+        headers: getCorsHeaders(),
+        body: JSON.stringify({ error: "Failed to initialise storage table." })
+      };
+      return;
+    }
+  }
+
+  // ── GET: Return all RSVPs ──────────────────────────────────────────────────
+  if (method === "GET") {
     try {
-        await tableClient.createTable();
-    } catch (e) {
-        if (e.statusCode !== 409) {
-            context.log.error("Table initialization failed:", e);
-        }
+      const records = [];
+      const entities = tableClient.listEntities();
+
+      for await (const entity of entities) {
+        records.push({
+          name:      entity.Name      || entity.rowKey || "Unknown",
+          attending: entity.Attending || "no",
+          chicken:   entity.Chicken   || "—",
+          side:      entity.Side      || "—",
+          drink:     entity.Drink     || "—",
+          dietary:   entity.Dietary   || "—"
+        });
+      }
+
+      context.res = {
+        status: 200,
+        headers: getCorsHeaders(),
+        body: JSON.stringify(records)
+      };
+    } catch (error) {
+      context.log.error("Error reading from Table Storage:", error.message);
+      context.res = {
+        status: 500,
+        headers: getCorsHeaders(),
+        body: JSON.stringify({ error: "Failed to read RSVP records." })
+      };
     }
+    return;
+  }
 
-    // Handle Fetch Data (GET)
-    if (method === 'get') {
-        try {
-            const records = [];
-            const entities = tableClient.listEntities();
-            
-            for await (const entity of entities) {
-                records.push({
-                    name: entity.Name || entity.rowKey,
-                    attending: entity.Attending || 'no',
-                    chicken: entity.Chicken || '—',
-                    side: entity.Side || '—',
-                    drink: entity.Drink || '—',
-                    dietary: entity.Dietary || '—'
-                });
-            }
+  // ── POST: Save a new RSVP ─────────────────────────────────────────────────
+  if (method === "POST") {
+    try {
+      const body = req.body;
 
-            context.res = {
-                status: 200,
-                headers: { "Content-Type": "application/json" },
-                body: records
-            };
-        } catch (error) {
-            context.log.error("Error scanning Table Storage via SDK:", error);
-            context.res = { status: 500, body: "Error reading registry data." };
-        }
+      if (!body || !body.name || !body.attending) {
+        context.res = {
+          status: 400,
+          headers: getCorsHeaders(),
+          body: JSON.stringify({ error: "Missing required fields: name and attending." })
+        };
         return;
+      }
+
+      const { name, attending, chicken, side, drink, dietary } = body;
+
+      // Build a safe rowKey: strip non-alphanumeric, truncate to 100 chars
+      const rowKey = name.replace(/[^a-zA-Z0-9]/g, "").substring(0, 100) || Date.now().toString();
+
+      const entity = {
+        partitionKey: "JeffreyGraduation2026",
+        rowKey:       rowKey,
+        Name:         name,
+        Attending:    attending,
+        Chicken:      attending === "yes" ? (chicken || "—") : "—",
+        Side:         attending === "yes" ? (side    || "—") : "—",
+        Drink:        attending === "yes" ? (drink   || "—") : "—",
+        Dietary:      dietary || "—"
+      };
+
+      await tableClient.upsertEntity(entity, "Replace");
+
+      context.res = {
+        status: 201,
+        headers: getCorsHeaders(),
+        body: JSON.stringify({ message: "RSVP saved successfully.", name })
+      };
+    } catch (error) {
+      context.log.error("Error writing to Table Storage:", error.message);
+      context.res = {
+        status: 500,
+        headers: getCorsHeaders(),
+        body: JSON.stringify({ error: "Failed to save RSVP." })
+      };
     }
+    return;
+  }
 
-    // Handle Form Submissions (POST)
-    if (method === 'post') {
-        try {
-            const { name, attending, chicken, side, drink, dietary } = req.body;
-
-            if (!name || !attending) {
-                context.res = { status: 400, body: "Missing required parameters." };
-                return;
-            }
-
-            const partitionKey = "JeffreyGraduation2026";
-            const rowKey = name.replace(/[^a-zA-Z0-9]/g, ""); 
-
-            const rsvpEntry = {
-                partitionKey: partitionKey,
-                rowKey: rowKey,
-                Name: name,
-                Attending: attending,
-                Chicken: attending === 'yes' ? chicken : '—',
-                Side: attending === 'yes' ? side : '—',
-                Drink: attending === 'yes' ? drink : '—',
-                Dietary: dietary || '—'
-            };
-
-            await tableClient.upsertEntity(rsvpEntry, "Replace");
-
-            context.res = {
-                status: 201,
-                headers: { "Content-Type": "application/json" },
-                body: { message: "RSVP logged successfully.", registeredName: name }
-            };
-        } catch (error) {
-            context.log.error("Error upserting entity to Table Storage:", error);
-            context.res = { status: 500, body: "Failed to store registration." };
-        }
-    }
+  // ── Unsupported method ────────────────────────────────────────────────────
+  context.res = {
+    status: 405,
+    headers: getCorsHeaders(),
+    body: JSON.stringify({ error: "Method not allowed." })
+  };
 };
