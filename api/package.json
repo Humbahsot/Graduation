@@ -1,17 +1,8 @@
 {
-  "name": "api-functions",
+  "name": "graduation-rsvp-frontend",
   "version": "1.0.0",
-  "description": "",
-  "main": "rsvp/index.js",
   "scripts": {
-    "start": "func start",
-    "test": "echo \"No tests specified\" && exit 0"
+    "build": "echo 'No frontend build step required'"
   },
-  "dependencies": {
-    "@azure/data-tables": "^13.2.2",
-    "@azure/functions": "^4.0.0"
-  },
-  "devDependencies": {
-    "azure-functions-core-tools": "^4.0.0"
-  }
+  "dependencies": {}
 }
