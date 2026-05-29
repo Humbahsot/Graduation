@@ -1,10 +1,8 @@
 {
-  "name": "graduation-rsvp",
+  "name": "graduation-rsvp-frontend",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo \"No frontend compilation required\""
+    "build": "echo 'No frontend build step required'"
   },
-  "dependencies": {
-    "@azure/data-tables": "^13.2.2"
-  }
+  "dependencies": {}
 }
