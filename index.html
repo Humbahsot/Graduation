@@ -78,15 +78,6 @@
   .menu-img-container img { width: 100%; display: block; height: 100%; object-fit: cover; }
   .img-caption { position: absolute; bottom: 12px; left: 12px; font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 2px; }
 
-  /* Menu Items List Layout */
-  .menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; text-align: left; }
-  .menu-list-item { border-left: 2px solid var(--gold); padding-left: 10px; }
-  .menu-list-item h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text); font-weight: 500; margin-bottom: 0.2rem; }
-  .menu-list-item p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
-  
-  /* Dietary tag pill styling inside the menu */
-  .menu-tag { display: inline-block; background: rgba(214, 175, 55, 0.1); color: var(--gold); font-size: 9px; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-top: 4px; letter-spacing: 0.05em; font-weight: 700; }
-
   /* Dress Code Section */
   .dress-code-section { margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); padding: 1.5rem 0; text-align: center; }
   .dress-code-box { background: rgba(214, 175, 55, 0.04); border: 1px dashed var(--border); padding: 1.25rem; border-radius: 4px; display: inline-block; width: 100%; max-width: 600px; }
@@ -110,7 +101,7 @@
   textarea.form-control { background: var(--deep); border: 1px solid var(--border); color: var(--text); resize: vertical; min-height: 60px; }
   textarea.form-control:focus { outline: none; border-color: var(--gold); }
 
-  /* Card Grid Options */
+  /* Card Grid Options from image_a27f0c.png */
   .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 0.5rem; }
   .cards-grid.four-cols { grid-template-columns: repeat(4, 1fr); }
   
@@ -122,10 +113,9 @@
   .form-group.validation-error { border: 1px dashed var(--accent); padding: 10px; border-radius: 4px; background: rgba(255, 77, 77, 0.03); }
 
   .card-main-text { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; line-height: 1.2; padding-right: 12px; }
-  .card-main-text { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; line-height: 1.2; padding-right: 12px; }
   .card-sub-text { font-size: 9px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-muted); }
   
-  /* Selected Radio Check Dot */
+  /* Selected Radio Check Dot from image_a27f0c.png */
   .card-indicator { width: 10px; height: 10px; border: 1px solid var(--border); border-radius: 50%; position: absolute; top: 12px; right: 12px; display: flex; align-items: center; justify-content: center; }
   .selection-card.selected .card-indicator { border-color: var(--gold); background: var(--gold); }
   .selection-card.selected .card-indicator::after { content: ''; width: 4px; height: 4px; background: var(--deep2); border-radius: 50%; }
@@ -145,7 +135,6 @@
     .selection-card { min-height: auto; padding: 10px; }
     header h1, header h2 { font-size: 2.2rem; }
     .panel { padding: 1.25rem; }
-    .menu-list { grid-template-columns: 1fr; gap: 1.25rem; }
   }
 </style>
 </head>
@@ -154,7 +143,6 @@
   
   <!-- Premium Header Layout with Graduation Cap Icon Accent -->
   <header>
-    <!-- Crisp Vector Graduation Mortarboard Cap -->
     <svg class="cap-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2L1 7L12 12L21.5 7.67V14.5H23V7L12 2Z" />
       <path d="M19 10.13V17.5C19 19.34 15.87 21 12 21C8.13 21 5 19.34 5 17.5V10.13L12 13.5L19 10.13Z" />
@@ -172,7 +160,6 @@
       <div class="meta-item"><span>Venue</span><p>+258 Taste of Mozambique</p></div>
       <div class="meta-item"><span>Address</span><p>Design Quarter, Fourways</p></div>
       <div class="meta-item"><span>Time</span><p>Doors open 18:00</p></div>
-      <!-- UPDATED CLOSING TIME -->
       <div class="meta-item"><span>Closes</span><p>23:00</p></div>
     </div>
     
@@ -185,31 +172,8 @@
     <h3>A taste of Mozambique</h3>
     <p class="menu-desc">We're celebrating with a feast of authentic Mozambican peri-peri chicken, paired with your choice of sides. Please select your meal preferences when you RSVP.</p>
     <div class="menu-img-container">
-      <!-- Local image file display in webpage body -->
-      <img src="image1.png" alt="Authentic Flame Grilled Mozambican Celebration Feast">
+      <img src="image2.png" alt="Authentic Flame Grilled Mozambican Celebration Feast">
       <div class="img-caption">Celebration Feast</div>
-    </div>
-
-    <!-- Elegant Layout For Main Menu Options -->
-    <div class="menu-list">
-      <div class="menu-list-item">
-        <h4>Quarter Chicken Feast</h4>
-        <p>Flame-grilled Mozambican style chicken, basted with your choice of signature spices and paired with a premium side dish.</p>
-      </div>
-      <div class="menu-list-item">
-        <h4>Authentic Peri-Peri Sides</h4>
-        <p>Complement your meal with traditional sides including golden chips, savory rice, traditional pap, side salad, or sweet potato.</p>
-      </div>
-      <div class="menu-list-item">
-        <h4>Grilled Calamari</h4>
-        <p>Delicious grilled calamari marinated in our Mozambican homemade sauce. You do not wish to miss it!</p>
-        <span class="menu-tag">Shellfish</span>
-      </div>
-      <div class="menu-list-item">
-        <h4>Fish & Chips</h4>
-        <p>Crispy battered fish, served with French fries, a side of refreshing coleslaw & tartare sauce for a traditional & satisfying meal.</p>
-        <span class="menu-tag">Fish</span>
-      </div>
     </div>
   </div>
 
@@ -217,7 +181,6 @@
   <div class="dress-code-section">
     <div class="section-label">Attire</div>
     <div class="dress-code-box">
-      <!-- UPDATED DRESS CODE THEME -->
       <div class="dress-code-title">Dress Code: Black with a touch of White or Silver</div>
       <div class="dress-code-desc">To complement our evening, guests are kindly requested to dress in elegant <strong>All-Black attire</strong> accented with a sophisticated <strong>touch of white or silver</strong>. Dress to impress!</div>
     </div>
@@ -244,11 +207,11 @@
       <div class="name-row">
         <div class="form-group">
           <label for="f-first">First Name <span>*</span></label>
-          <input type="text" id="f-first" name="First Name" class="form-control" required placeholder="">
+          <input type="text" id="f-first" name="First Name" class="form-control" required>
         </div>
         <div class="form-group">
           <label for="f-last">Last Name <span>*</span></label>
-          <input type="text" id="f-last" name="Last Name" class="form-control" required placeholder="">
+          <input type="text" id="f-last" name="Last Name" class="form-control" required>
         </div>
       </div>
       
@@ -262,7 +225,7 @@
         </select>
       </div>
 
-      <!-- Catering Selections -->
+      <!-- Catering Selections Exactly matching image_a27f0c.png -->
       <div id="catering-container" style="display: none;">
         
         <!-- Chicken Selection Section -->
