@@ -101,11 +101,11 @@
   textarea.form-control { background: var(--deep); border: 1px solid var(--border); color: var(--text); resize: vertical; min-height: 60px; }
   textarea.form-control:focus { outline: none; border-color: var(--gold); }
 
-  /* Card Grid Options from image_a27f0c.png */
+  /* Card Grid Options */
   .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 0.5rem; }
   .cards-grid.four-cols { grid-template-columns: repeat(4, 1fr); }
   
-  .selection-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 4px; padding: 12px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; min-height: 60px; }
+  .selection-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 4px; padding: 12px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; min-height: 70px; }
   .selection-card:hover { border-color: rgba(214, 175, 55, 0.6); background: rgba(214, 175, 55, 0.02); }
   .selection-card.selected { border-color: var(--gold); background: rgba(214, 175, 55, 0.08); box-shadow: inset 0 0 0 1px var(--gold); }
   
@@ -113,9 +113,9 @@
   .form-group.validation-error { border: 1px dashed var(--accent); padding: 10px; border-radius: 4px; background: rgba(255, 77, 77, 0.03); }
 
   .card-main-text { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; line-height: 1.2; padding-right: 12px; }
-  .card-sub-text { font-size: 9px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-muted); }
+  .card-sub-text { font-size: 9px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-muted); line-height: 1.2; }
   
-  /* Selected Radio Check Dot from image_a27f0c.png */
+  /* Selected Radio Check Dot */
   .card-indicator { width: 10px; height: 10px; border: 1px solid var(--border); border-radius: 50%; position: absolute; top: 12px; right: 12px; display: flex; align-items: center; justify-content: center; }
   .selection-card.selected .card-indicator { border-color: var(--gold); background: var(--gold); }
   .selection-card.selected .card-indicator::after { content: ''; width: 4px; height: 4px; background: var(--deep2); border-radius: 50%; }
@@ -170,7 +170,7 @@
   <div class="menu-section">
     <div class="section-label">The Menu</div>
     <h3>A taste of Mozambique</h3>
-    <p class="menu-desc">We're celebrating with a feast of authentic Mozambican peri-peri chicken, paired with your choice of sides. Please select your meal preferences when you RSVP.</p>
+    <p class="menu-desc">We're celebrating with an authentic culinary experience. Please choose your main dishes and beverage pairings below when submitting your RSVP response.</p>
     <div class="menu-img-container">
       <img src="image1.png" alt="Authentic Flame Grilled Mozambican Celebration Feast">
       <div class="img-caption">Celebration Feast</div>
@@ -199,7 +199,7 @@
       <input type="hidden" name="from_name" value="Graduation RSVP System">
       
       <!-- Hidden Data Selection Sinks -->
-      <input type="hidden" name="Chicken Selection" id="input-chicken" value="">
+      <input type="hidden" name="Main Course Selection" id="input-maincourse" value="">
       <input type="hidden" name="Side Dish Choice" id="input-side" value="">
       <input type="hidden" name="Drink Request" id="input-drink" value="">
 
@@ -225,27 +225,45 @@
         </select>
       </div>
 
-      <!-- Catering Selections Exactly matching image_a27f0c.png -->
+      <!-- Catering Selections Container -->
       <div id="catering-container" style="display: none;">
         
-        <!-- Chicken Selection Section -->
-        <div class="form-group" id="group-chicken">
-          <label>Choose your chicken <span>*</span></label>
+        <!-- Main Course Selection Section -->
+        <div class="form-group" id="group-maincourse">
+          <label>Choose your main course <span>*</span></label>
           <div class="cards-grid">
-            <div class="selection-card" data-type="chicken" data-val="PERI-PERI" onclick="selectCard(this)">
+            <div class="selection-card" data-type="maincourse" data-val="PERI-PERI CHICKEN" onclick="selectCard(this)">
               <div class="card-indicator"></div>
               <div class="card-main-text">Peri-Peri</div>
-              <div class="card-sub-text">Bold & Fiery Spice</div>
+              <div class="card-sub-text">Bold & Fiery Chicken</div>
             </div>
-            <div class="selection-card" data-type="chicken" data-val="LEMON & HERB" onclick="selectCard(this)">
+            <div class="selection-card" data-type="maincourse" data-val="LEMON & HERB CHICKEN" onclick="selectCard(this)">
               <div class="card-indicator"></div>
               <div class="card-main-text">Lemon & Herb</div>
-              <div class="card-sub-text">Zesty & Aromatic</div>
+              <div class="card-sub-text">Zesty Chicken</div>
             </div>
-            <div class="selection-card" data-type="chicken" data-val="MILD" onclick="selectCard(this)">
+            <div class="selection-card" data-type="maincourse" data-val="MILD CHICKEN" onclick="selectCard(this)">
               <div class="card-indicator"></div>
               <div class="card-main-text">Mild</div>
-              <div class="card-sub-text">Gentle Heat</div>
+              <div class="card-sub-text">Gentle Heat Chicken</div>
+            </div>
+          </div>
+          <!-- Additional Menu Options from image_a27009.jpg -->
+          <div class="cards-grid" style="margin-top: 0.5rem;">
+            <div class="selection-card" data-type="maincourse" data-val="VEGETABLE SPICY RICE" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Vegetable spicy rice</div>
+              <div class="card-sub-text">Fried rice with a marinade of piri piri, spices, and vegetables</div>
+            </div>
+            <div class="selection-card" data-type="maincourse" data-val="GRILLED CALAMARI" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Grilled calamari</div>
+              <div class="card-sub-text">Grilled calamari in home-made Mozambican sauce (Shellfish)</div>
+            </div>
+            <div class="selection-card" data-type="maincourse" data-val="FISH & CHIPS" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Fish & Chips</div>
+              <div class="card-sub-text">Crispy battered fish, French fries, coleslaw & tartare sauce</div>
             </div>
           </div>
         </div>
@@ -341,20 +359,20 @@
   function toggleCatering(statusValue) {
     const container = document.getElementById('catering-container');
     
-    document.getElementById('group-chicken').classList.remove('validation-error');
+    document.getElementById('group-maincourse').classList.remove('validation-error');
     document.getElementById('group-side').classList.remove('validation-error');
     document.getElementById('group-drink').classList.remove('validation-error');
 
     if (statusValue.includes("Unfortunately")) {
       container.style.display = 'none';
-      document.getElementById('input-chicken').value = "N/A - Not Attending";
+      document.getElementById('input-maincourse').value = "N/A - Not Attending";
       document.getElementById('input-side').value = "N/A - Not Attending";
       document.getElementById('input-drink').value = "N/A - Not Attending";
     } else {
       container.style.display = 'block';
       const cards = container.querySelectorAll('.selection-card');
       cards.forEach(c => c.classList.remove('selected'));
-      document.getElementById('input-chicken').value = "";
+      document.getElementById('input-maincourse').value = "";
       document.getElementById('input-side').value = "";
       document.getElementById('input-drink').value = "";
     }
@@ -374,14 +392,14 @@
     const attendance = document.getElementById('f-attending').value;
     
     if (attendance.includes("Yes")) {
-      const chickenVal = document.getElementById('input-chicken').value;
+      const mainCourseVal = document.getElementById('input-maincourse').value;
       const sideVal = document.getElementById('input-side').value;
       const drinkVal = document.getElementById('input-drink').value;
       
       let errorTriggered = false;
       
-      if (!chickenVal) {
-        document.getElementById('group-chicken').classList.add('validation-error');
+      if (!mainCourseVal) {
+        document.getElementById('group-maincourse').classList.add('validation-error');
         errorTriggered = true;
       }
       if (!sideVal) {
