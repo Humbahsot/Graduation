@@ -3,121 +3,293 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Graduation RSVP Portal</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✉️</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=0,500;0,600&family=DM+Sans:wght=400;500;700&display=swap" rel="stylesheet">
+<title>Jeffrey's Graduation RSVP</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,500;1,400&family=DM+Sans:wght=400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --gold: #C9A84C;
-    --deep: #0B0F19;
-    --deep2: #111827;
+    --deep: #0F121F;
+    --deep2: #161A2E;
     --text: #F9FAFB;
     --text-muted: #9CA3AF;
     --accent: #EF4444;
     --success: #10B981;
     --border: rgba(255,255,255,0.08);
+    --input-bg: #EAEFF9;
   }
+  
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding: 2rem 1rem; }
-  .container { max-width: 600px; margin: 0 auto; }
+  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding: 4rem 1rem; }
+  .container { max-width: 800px; margin: 0 auto; }
   
-  header { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; text-align: center; }
-  .title-area h1 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--gold); }
-  .title-area p { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+  /* Header Section */
+  header { text-align: center; margin-bottom: 4rem; }
+  .badge { border: 1px solid var(--gold); display: inline-block; padding: 4px 16px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; font-weight: 500; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 400; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+  header h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-style: italic; color: var(--gold); font-weight: 400; margin-bottom: 1.5rem; }
+  header .tagline { font-size: 1.1rem; color: var(--text-muted); font-weight: 400; margin-bottom: 3rem; letter-spacing: 0.05em; }
   
-  button { padding: 12px 16px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; cursor: pointer; border: none; transition: background 0.2s ease; }
-  .btn-primary { background: var(--gold); color: var(--deep); width: 100%; margin-top: 1rem; }
-  .btn-primary:hover { background: #E8D5A3; }
+  /* Meta Grid */
+  .meta-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 50%, transparent); margin-bottom: 1.5rem; }
+  .date-row { font-size: 0.9rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 1.5rem; text-align: center; }
+  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center; margin-bottom: 4rem; }
+  .meta-item span { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.4rem; font-weight: 700; }
+  .meta-item p { font-size: 0.95rem; color: var(--text); line-height: 1.4; }
+  .rsvp-below { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 2rem; position: relative; }
+  .rsvp-below::after { content: ''; display: block; width: 1px; height: 30px; background: var(--gold); margin: 10px auto 0; }
+
+  /* Food Menu Section */
+  .menu-section { margin-bottom: 5rem; }
+  .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; font-weight: 700; }
+  .menu-section h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 500; margin-bottom: 1.5rem; }
+  .menu-section .menu-desc { color: var(--text-muted); font-size: 1rem; line-height: 1.6; max-width: 650px; margin-bottom: 2rem; }
+  .menu-img-container { width: 100%; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+  .menu-img-container img { width: 100%; display: block; height: auto; }
+  .img-caption { position: absolute; bottom: 15px; left: 15px; font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.1rem; }
+
+  /* Form Layout */
+  .form-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 500; margin-bottom: 2rem; }
+  .panel { background: var(--deep2); border: 1px solid var(--border); border-radius: 4px; padding: 3rem; }
+  .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
   
-  .panel { background: var(--deep2); border: 1px solid var(--border); border-radius: 6px; padding: 2rem; margin-bottom: 2rem; }
-  .panel-title { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; font-weight: 600; text-align: center; }
+  .form-group { margin-bottom: 2rem; }
+  .form-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.75rem; font-weight: 700; }
+  .form-group label span { color: var(--accent); }
   
-  .form-group { margin-bottom: 1.2rem; }
-  .form-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; }
-  .form-control { width: 100%; background: var(--deep); border: 1px solid var(--border); border-radius: 4px; padding: 10px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; }
-  .form-control:focus { outline: none; border-color: var(--gold); }
-  .conditional-fields { display: none; border-left: 2px solid var(--gold); padding-left: 1rem; margin-top: 1rem; }
+  /* Standard Inputs */
+  .form-control { width: 100%; background: var(--input-bg); border: none; border-radius: 4px; padding: 14px; color: #000000; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; }
+  .form-control:focus { outline: 2px solid var(--gold); }
+  select.form-control { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F121F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right: 40px; cursor: pointer; }
+  textarea.form-control { background: var(--deep); border: 1px solid var(--border); color: var(--text); resize: vertical; min-height: 80px; }
+  textarea.form-control:focus { outline: none; border-color: var(--gold); }
+
+  /* Card Grid Options */
+  .conditional-fields { display: none; }
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cards-grid.four-cols { grid-template-columns: repeat(4, 1fr); }
   
-  .alert { padding: 12px; border-radius: 4px; font-size: 12px; margin-bottom: 1.5rem; display: none; text-align: center; }
-  .alert-success { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid var(--success); }
-  .alert-error { background: rgba(239,68,68,0.15); color: var(--accent); border: 1px solid var(--accent); }
+  .selection-card { background: transparent; border: 1px solid var(--border); border-radius: 4px; padding: 16px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; min-height: 75px; text-align: left; }
+  .selection-card:hover { border-color: rgba(201, 168, 76, 0.4); }
+  .selection-card.selected { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+  
+  .card-main-text { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; line-height: 1.2; }
+  .card-sub-text { font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+  
+  /* Radio Circles inside Cards */
+  .card-indicator { width: 12px; height: 12px; border: 1px solid var(--border); border-radius: 50%; position: absolute; top: 16px; right: 16px; display: flex; align-items: center; justify-content: center; }
+  .selection-card.selected .card-indicator { border-color: var(--gold); background: var(--gold); }
+  .selection-card.selected .card-indicator::after { content: ''; width: 4px; height: 4px; background: var(--deep); border-radius: 50%; }
+
+  /* Submit Button */
+  button.btn-submit { background: var(--gold); color: #2C2512; width: 100%; padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 4px; cursor: pointer; border: none; transition: background 0.2s ease; margin-top: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  button.btn-submit:hover { background: #DFBE5E; }
+  button.btn-submit:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
+  
+  /* Notifications */
+  .alert { padding: 14px; border-radius: 4px; font-size: 13px; margin-bottom: 2rem; display: none; text-align: center; font-weight: 500; }
+  .alert-success { background: rgba(16,185,129,0.1); color: var(--success); border: 1px solid var(--success); }
+  .alert-error { background: rgba(239,68,68,0.1); color: var(--accent); border: 1px solid var(--accent); }
+
+  @media (max-width: 640px) {
+    .name-row, .meta-grid, .cards-grid, .cards-grid.four-cols { grid-template-columns: 1fr; }
+    header h1, header h2 { font-size: 2.5rem; }
+    .panel { padding: 1.5rem; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
+  
   <header>
-    <div class="title-area">
-      <h1>Graduation Guest RSVP</h1>
-      <p>Celebration Event · 12 June 2026</p>
+    <div class="badge">You are cordially invited</div>
+    <h1>Jeffrey's</h1>
+    <h2>Graduation</h2>
+    <p class="tagline">A celebration of achievement, family & good food</p>
+    
+    <div class="meta-divider"></div>
+    <div class="date-row">12 June 2026</div>
+    
+    <div class="meta-grid">
+      <div class="meta-item"><span>Venue</span><p>+258 Taste of Mozambique</p></div>
+      <div class="meta-item"><span>Address</span><p>Design Quarter, Fourways</p></div>
+      <div class="meta-item"><span>Time</span><p>Doors open 18:00</p></div>
+      <div class="meta-item"><span>Closes</span><p>22:00</p></div>
     </div>
+    
+    <div class="rsvp-below">RSVP Below</div>
   </header>
 
+  <div class="menu-section">
+    <div class="section-label">The Menu</div>
+    <h3>A taste of Mozambique</h3>
+    <p class="menu-desc">We're celebrating with a feast of authentic Mozambican peri-peri chicken, paired with your choice of sides. Please select your meal preferences when you RSVP.</p>
+    <div class="menu-img-container">
+      <img src="image_f50dbd.jpg" alt="Peri-peri Chicken Setup" onerror="this.style.display='none'">
+      <div class="img-caption">Peri-peri Chicken</div>
+    </div>
+  </div>
+
+  <div class="form-title" id="rsvp-anchor">Confirm your attendance</div>
+  
   <div class="panel">
-    <div class="panel-title">Submit Response</div>
     <div id="form-alert" class="alert"></div>
     
     <form id="rsvp-form" onsubmit="submitToEmail(event)">
-      <!-- Web3Forms Routing Configuration -->
-      <input type="hidden" name="access_key" id="web3forms-key" value="c0a447db-e1ca-4fb9-92fa-c86281670ee6">
+      <input type="hidden" name="access_key" value="c0a447db-e1ca-4fb9-92fa-c86281670ee6">
       <input type="hidden" name="subject" value="New Graduation RSVP Submission">
-      <input type="hidden" name="from_name" value="RSVP Portal Engine">
+      <input type="hidden" name="from_name" value="RSVP Engine">
+      
+      <input type="hidden" name="Chicken Selection" id="input-chicken" value="PERI-PERI">
+      <input type="hidden" name="Side Dish Choice" id="input-side" value="PAP">
+      <input type="hidden" name="Drink Request" id="input-drink" value="STELLA ARTOIS">
 
-      <div class="form-group">
-        <label for="f-name">Full Name</label>
-        <input type="text" id="f-name" name="Guest Name" class="form-control" required placeholder="e.g. Bongani Khosa">
+      <div class="name-row">
+        <div class="form-group">
+          <label for="f-first">First Name <span>*</span></label>
+          <input type="text" id="f-first" name="First Name" class="form-control" required placeholder="Jeffrey">
+        </div>
+        <div class="form-group">
+          <label for="f-last">Last Name <span>*</span></label>
+          <input type="text" id="f-last" name="Last Name" class="form-control" required placeholder="chauke">
+        </div>
       </div>
       
       <div class="form-group">
-        <label for="f-attending">Will you be attending?</label>
-        <select id="f-attending" name="Attendance Status" class="form-control" required onchange="toggleCateringFields(this.value)">
-          <option value="" disabled selected>Select an option</option>
-          <option value="Yes, gladly">Yes, gladly</option>
-          <option value="No, unfortunately">No, unfortunately</option>
+        <label for="f-attending">Will you be attending? <span>*</span></label>
+        <select id="f-attending" name="Attendance Status" class="form-control" required onchange="toggleCatering(this.value)">
+          <option value="Yes, I'll be there! 🎉" selected>Yes, I'll be there! 🎉</option>
+          <option value="Unfortunately I can't make it">Unfortunately I can't make it</option>
         </select>
       </div>
 
-      <!-- Secondary Catering Fields -->
-      <div id="catering-fields" class="conditional-fields">
+      <div id="catering-container" class="conditional-fields" style="display: block;">
+        
         <div class="form-group">
-          <label for="f-chicken">Chicken Selection</label>
-          <select id="f-chicken" name="Chicken Selection" class="form-control">
-            <option value="Roasted Breast">Roasted Breast</option>
-            <option value="Grilled Quarter">Grilled Quarter</option>
-            <option value="Strips">Strips</option>
-            <option value="N/A">Not Applicable</option>
-          </select>
+          <label>Choose your chicken</label>
+          <div class="cards-grid">
+            <div class="selection-card selected" data-type="chicken" data-val="PERI-PERI" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Peri-Peri</div>
+              <div class="card-sub-text">Bold & Fiery Spice</div>
+            </div>
+            <div class="selection-card" data-type="chicken" data-val="LEMON & HERB" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Lemon & Herb</div>
+              <div class="card-sub-text">Zesty & Aromatic</div>
+            </div>
+            <div class="selection-card" data-type="chicken" data-val="MILD" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Mild</div>
+              <div class="card-sub-text">Gentle Heat</div>
+            </div>
+          </div>
         </div>
         
         <div class="form-group">
-          <label for="f-side">Preferred Side</label>
-          <select id="f-side" name="Side Dish Choice" class="form-control">
-            <option value="Savory Rice">Savory Rice</option>
-            <option value="Potato Wedges">Potato Wedges</option>
-            <option value="Salad Mix">Salad Mix</option>
-            <option value="N/A">Not Applicable</option>
-          </select>
+          <label>Choose your side</label>
+          <div class="cards-grid four-cols">
+            <div class="selection-card selected" data-type="side" data-val="PAP" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Pap</div>
+              <div class="card-sub-text"></div>
+            </div>
+            <div class="selection-card" data-type="side" data-val="SALAD" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Salad</div>
+              <div class="card-sub-text"></div>
+            </div>
+            <div class="selection-card" data-type="side" data-val="RICE" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Rice</div>
+              <div class="card-sub-text"></div>
+            </div>
+            <div class="selection-card" data-type="side" data-val="SWEET POTATO" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Sweet Potato</div>
+              <div class="card-sub-text"></div>
+            </div>
+            <div class="selection-card" data-type="side" data-val="CHIPS" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">Chips</div>
+              <div class="card-sub-text"></div>
+            </div>
+          </div>
         </div>
         
         <div class="form-group">
-          <label for="f-drink">Drink Selection</label>
-          <input type="text" id="f-drink" name="Drink Request" class="form-control" placeholder="e.g. Sparkling Water, Juice">
+          <label>Choose your drink</label>
+          <div class="cards-grid four-cols">
+            <div class="selection-card selected" data-type="drink" data-val="STELLA ARTOIS" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">🍺 Stella Artois</div>
+              <div class="card-sub-text">Beer</div>
+            </div>
+            <div class="selection-card" data-type="drink" data-val="CASTLE LITE" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">🍺 Castle Lite</div>
+              <div class="card-sub-text">Beer</div>
+            </div>
+            <div class="selection-card" data-type="drink" data-val="FRUIT JUICE" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">🧃 Fruit Juice</div>
+              <div class="card-sub-text">Juice</div>
+            </div>
+            <div class="selection-card" data-type="drink" data-val="STILL WATER" onclick="selectCard(this)">
+              <div class="card-indicator"></div>
+              <div class="card-main-text">💧 Still Water</div>
+              <div class="card-sub-text">Water</div>
+            </div>
+          </div>
         </div>
+
       </div>
 
       <div class="form-group">
-        <label for="f-dietary">Dietary Restrictions</label>
-        <input type="text" id="f-dietary" name="Dietary Restrictions" class="form-control" placeholder="e.g. None, Vegetarian, Halal">
+        <label for="f-dietary">Dietary Requirements</label>
+        <textarea id="f-dietary" name="Dietary Restrictions" class="form-control" placeholder="none"></textarea>
       </div>
 
-      <button type="submit" id="submit-btn" class="btn-primary">Submit Registration</button>
+      <button type="submit" id="submit-btn" class="btn-submit">Confirm My RSVP →</button>
     </form>
   </div>
 </div>
 
 <script>
-  function toggleCateringFields(value) {
-    const fields = document.getElementById('catering-fields');
-    fields.style.display = (value === 'Yes, gladly') ? 'block' : 'none';
+  // Handles the selective highlighting of custom grid cards
+  function selectCard(cardElement) {
+    const type = cardElement.getAttribute('data-type');
+    const val = cardElement.getAttribute('data-val');
+    
+    // Unselect brother layout cards
+    const siblings = cardElement.parentElement.querySelectorAll('.selection-card');
+    siblings.forEach(el => el.classList.remove('selected'));
+    
+    // Select current target
+    cardElement.classList.add('selected');
+    
+    // Feed hidden inputs for payload delivery
+    document.getElementById(`input-${type}`).value = val;
+  }
+
+  // Toggles optional grids based on active presence status
+  function toggleCatering(statusValue) {
+    const container = document.getElementById('catering-container');
+    if (statusValue.includes("Unfortunately")) {
+      container.style.display = 'none';
+      document.getElementById('input-chicken').value = "N/A - Not Attending";
+      document.getElementById('input-side').value = "N/A - Not Attending";
+      document.getElementById('input-drink').value = "N/A - Not Attending";
+    } else {
+      container.style.display = 'block';
+      // Restores active node configurations
+      const selectedChicken = container.querySelector('.selection-card[data-type="chicken"].selected');
+      const selectedSide = container.querySelector('.selection-card[data-type="side"].selected');
+      const selectedDrink = container.querySelector('.selection-card[data-type="drink"].selected');
+      if(selectedChicken) document.getElementById('input-chicken').value = selectedChicken.getAttribute('data-val');
+      if(selectedSide) document.getElementById('input-side').value = selectedSide.getAttribute('data-val');
+      if(selectedDrink) document.getElementById('input-drink').value = selectedDrink.getAttribute('data-val');
+    }
   }
 
   function showAlert(msg, isSuccess = true) {
@@ -125,13 +297,15 @@
     alertBox.textContent = msg;
     alertBox.className = `alert ${isSuccess ? 'alert-success' : 'alert-error'}`;
     alertBox.style.display = 'block';
+    document.getElementById('rsvp-anchor').scrollIntoView({ behavior: 'smooth' });
   }
 
+  // Handle data collection and push execution over Web3Forms endpoint router
   async function submitToEmail(event) {
     event.preventDefault();
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
-    btn.textContent = "Sending Email...";
+    btn.textContent = "Processing Registration...";
 
     const formData = new FormData(event.target);
     const object = Object.fromEntries(formData);
@@ -150,17 +324,18 @@
       const resData = await response.json();
 
       if (response.status === 200 && resData.success) {
-        showAlert("Thank you! Your RSVP has been sent directly to the host.");
+        showAlert("Thank you! Your RSVP choices have been registered directly to Jeffrey's inbox.");
         document.getElementById('rsvp-form').reset();
-        toggleCateringFields('no');
+        // Reset card selection highlights back to baseline
+        toggleCatering("Yes");
       } else {
-        showAlert(resData.message || "There was an issue sending your response.", false);
+        showAlert(resData.message || "Submission issue encountered. Please try again.", false);
       }
     } catch (e) {
-      showAlert("Network connection error. Could not reach mail server.", false);
+      showAlert("Network error occurred. Please verify your connection status.", false);
     } finally {
       btn.disabled = false;
-      btn.textContent = "Submit Registration";
+      btn.textContent = "Confirm My RSVP →";
     }
   }
 </script>
