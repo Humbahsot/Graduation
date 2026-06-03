@@ -8,99 +8,108 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,500;1,400&family=DM+Sans:wght=400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #C9A84C;
-    --deep: #0F121F;
-    --deep2: #161A2E;
-    --text: #F9FAFB;
-    --text-muted: #9CA3AF;
-    --accent: #EF4444;
+    --gold: #D4AF37; /* Refined True Gold */
+    --gold-hover: #F3E5AB;
+    --deep: #090A10; /* Pure Rich Black */
+    --deep2: #121420; /* Dark Panel Fill */
+    --text: #FFFFFF;
+    --text-muted: #A0A5B5;
+    --accent: #FF4D4D;
     --success: #10B981;
-    --border: rgba(255,255,255,0.08);
-    --input-bg: #EAEFF9;
+    --border: rgba(212, 175, 55, 0.15); /* Soft Gold Borders */
+    --input-bg: #F0F4F8;
   }
   
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding: 4rem 1rem; }
-  .container { max-width: 800px; margin: 0 auto; }
+  body { background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding: 2rem 1rem; }
+  .container { max-width: 720px; margin: 0 auto; }
   
   /* Header Section */
-  header { text-align: center; margin-bottom: 4rem; }
-  .badge { border: 1px solid var(--gold); display: inline-block; padding: 4px 16px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; font-weight: 500; }
-  header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 400; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-  header h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-style: italic; color: var(--gold); font-weight: 400; margin-bottom: 1.5rem; }
-  header .tagline { font-size: 1.1rem; color: var(--text-muted); font-weight: 400; margin-bottom: 3rem; letter-spacing: 0.05em; }
+  header { text-align: center; margin-bottom: 2rem; }
+  .badge { border: 1px solid var(--gold); display: inline-block; padding: 4px 12px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; font-weight: 500; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 400; margin-bottom: 0.2rem; }
+  header h2 { font-family: 'Playfair Display', serif; font-size: 3rem; font-style: italic; color: var(--gold); font-weight: 400; margin-bottom: 0.75rem; }
+  header .tagline { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; letter-spacing: 0.05em; }
   
   /* Meta Grid */
-  .meta-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 50%, transparent); margin-bottom: 1.5rem; }
-  .date-row { font-size: 0.9rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 1.5rem; text-align: center; }
-  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center; margin-bottom: 4rem; }
-  .meta-item span { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.4rem; font-weight: 700; }
-  .meta-item p { font-size: 0.95rem; color: var(--text); line-height: 1.4; }
-  .rsvp-below { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 2rem; position: relative; }
-  .rsvp-below::after { content: ''; display: block; width: 1px; height: 30px; background: var(--gold); margin: 10px auto 0; }
+  .meta-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 50%, transparent); margin-bottom: 1rem; }
+  .date-row { font-size: 0.95rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 1rem; text-align: center; font-weight: 500; }
+  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; text-align: center; margin-bottom: 2rem; }
+  .meta-item span { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.2rem; font-weight: 700; }
+  .meta-item p { font-size: 0.85rem; color: var(--text); line-height: 1.3; }
+  .rsvp-below { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 1rem; }
+  .rsvp-below::after { content: ''; display: block; width: 1px; height: 20px; background: var(--gold); margin: 6px auto 0; }
 
   /* Food Menu Section */
-  .menu-section { margin-bottom: 5rem; }
-  .section-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; font-weight: 700; }
-  .menu-section h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 500; margin-bottom: 1.5rem; }
-  .menu-section .menu-desc { color: var(--text-muted); font-size: 1rem; line-height: 1.6; max-width: 650px; margin-bottom: 2rem; }
-  .menu-img-container { width: 100%; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); position: relative; }
-  .menu-img-container img { width: 100%; display: block; height: auto; }
-  .img-caption { position: absolute; bottom: 15px; left: 15px; font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.1rem; }
+  .menu-section { margin-bottom: 2rem; }
+  .section-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; font-weight: 700; }
+  .menu-section h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .menu-section .menu-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+  .menu-img-container { width: 100%; border-radius: 4px; overflow: hidden; border: 1px solid var(--gold); position: relative; max-height: 280px; }
+  .menu-img-container img { width: 100%; display: block; height: 100%; object-fit: cover; }
+  .img-caption { position: absolute; bottom: 12px; left: 12px; font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 2px; }
+
+  /* Dress Code Section */
+  .dress-code-section { margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); padding: 1.5rem 0; text-align: center; }
+  .dress-code-box { background: rgba(214, 175, 55, 0.04); border: 1px dashed var(--border); padding: 1.25rem; border-radius: 4px; display: inline-block; width: 100%; max-width: 600px; }
+  .dress-code-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); margin-bottom: 0.5rem; font-style: italic; }
+  .dress-code-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+  .dress-code-desc strong { color: var(--text); font-weight: 500; }
 
   /* Form Layout */
-  .form-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 500; margin-bottom: 2rem; }
-  .panel { background: var(--deep2); border: 1px solid var(--border); border-radius: 4px; padding: 3rem; }
-  .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .form-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 500; margin-bottom: 1rem; text-align: center; color: var(--gold); }
+  .panel { background: var(--deep2); border: 1px solid var(--border); border-radius: 6px; padding: 2rem; }
+  .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   
-  .form-group { margin-bottom: 2rem; }
-  .form-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.75rem; font-weight: 700; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.4rem; font-weight: 700; }
   .form-group label span { color: var(--accent); }
   
   /* Standard Inputs */
-  .form-control { width: 100%; background: var(--input-bg); border: none; border-radius: 4px; padding: 14px; color: #000000; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; }
+  .form-control { width: 100%; background: var(--input-bg); border: none; border-radius: 4px; padding: 12px; color: #000000; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; }
   .form-control:focus { outline: 2px solid var(--gold); }
-  select.form-control { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F121F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right: 40px; cursor: pointer; }
-  textarea.form-control { background: var(--deep); border: 1px solid var(--border); color: var(--text); resize: vertical; min-height: 80px; }
+  select.form-control { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23090A10' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 14px; -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right: 35px; cursor: pointer; }
+  textarea.form-control { background: var(--deep); border: 1px solid var(--border); color: var(--text); resize: vertical; min-height: 60px; }
   textarea.form-control:focus { outline: none; border-color: var(--gold); }
 
   /* Card Grid Options */
-  .conditional-fields { display: none; }
-  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 0.5rem; }
   .cards-grid.four-cols { grid-template-columns: repeat(4, 1fr); }
   
-  .selection-card { background: transparent; border: 1px solid var(--border); border-radius: 4px; padding: 16px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; min-height: 75px; text-align: left; }
-  .selection-card:hover { border-color: rgba(201, 168, 76, 0.4); }
-  .selection-card.selected { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+  .selection-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 4px; padding: 12px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; min-height: 60px; }
+  .selection-card:hover { border-color: rgba(214, 175, 55, 0.6); background: rgba(214, 175, 55, 0.02); }
+  .selection-card.selected { border-color: var(--gold); background: rgba(214, 175, 55, 0.08); box-shadow: inset 0 0 0 1px var(--gold); }
   
-  .card-main-text { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; line-height: 1.2; }
-  .card-sub-text { font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+  .card-main-text { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; line-height: 1.2; padding-right: 12px; }
+  .card-sub-text { font-size: 9px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-muted); }
   
-  /* Radio Circles inside Cards */
-  .card-indicator { width: 12px; height: 12px; border: 1px solid var(--border); border-radius: 50%; position: absolute; top: 16px; right: 16px; display: flex; align-items: center; justify-content: center; }
+  /* Selected Radio Check Dot */
+  .card-indicator { width: 10px; height: 10px; border: 1px solid var(--border); border-radius: 50%; position: absolute; top: 12px; right: 12px; display: flex; align-items: center; justify-content: center; }
   .selection-card.selected .card-indicator { border-color: var(--gold); background: var(--gold); }
-  .selection-card.selected .card-indicator::after { content: ''; width: 4px; height: 4px; background: var(--deep); border-radius: 50%; }
+  .selection-card.selected .card-indicator::after { content: ''; width: 4px; height: 4px; background: var(--deep2); border-radius: 50%; }
 
   /* Submit Button */
-  button.btn-submit { background: var(--gold); color: #2C2512; width: 100%; padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 4px; cursor: pointer; border: none; transition: background 0.2s ease; margin-top: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  button.btn-submit:hover { background: #DFBE5E; }
-  button.btn-submit:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
+  button.btn-submit { background: var(--gold); color: #000000; width: 100%; padding: 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; cursor: pointer; border: none; transition: background 0.2s ease; margin-top: 0.5rem; }
+  button.btn-submit:hover { background: var(--gold-hover); }
+  button.btn-submit:disabled { background: rgba(255,255,255,0.1); color: var(--text-muted); cursor: not-allowed; }
   
   /* Notifications */
-  .alert { padding: 14px; border-radius: 4px; font-size: 13px; margin-bottom: 2rem; display: none; text-align: center; font-weight: 500; }
+  .alert { padding: 12px; border-radius: 4px; font-size: 12px; margin-bottom: 1.25rem; display: none; text-align: center; font-weight: 500; }
   .alert-success { background: rgba(16,185,129,0.1); color: var(--success); border: 1px solid var(--success); }
   .alert-error { background: rgba(239,68,68,0.1); color: var(--accent); border: 1px solid var(--accent); }
 
   @media (max-width: 640px) {
-    .name-row, .meta-grid, .cards-grid, .cards-grid.four-cols { grid-template-columns: 1fr; }
-    header h1, header h2 { font-size: 2.5rem; }
-    .panel { padding: 1.5rem; }
+    .name-row, .meta-grid, .cards-grid, .cards-grid.four-cols { grid-template-columns: 1fr; gap: 0.5rem; }
+    .selection-card { min-height: auto; padding: 10px; }
+    header h1, header h2 { font-size: 2.2rem; }
+    .panel { padding: 1.25rem; }
   }
 </style>
 </head>
 <body>
 <div class="container">
   
+  <!-- Premium Header Layout -->
   <header>
     <div class="badge">You are cordially invited</div>
     <h1>Jeffrey's</h1>
@@ -120,30 +129,44 @@
     <div class="rsvp-below">RSVP Below</div>
   </header>
 
+  <!-- Menu Section With Genuine Food Asset -->
   <div class="menu-section">
     <div class="section-label">The Menu</div>
     <h3>A taste of Mozambique</h3>
     <p class="menu-desc">We're celebrating with a feast of authentic Mozambican peri-peri chicken, paired with your choice of sides. Please select your meal preferences when you RSVP.</p>
     <div class="menu-img-container">
-      <img src="image_f50dbd.jpg" alt="Peri-peri Chicken Setup" onerror="this.style.display='none'">
-      <div class="img-caption">Peri-peri Chicken</div>
+      <img src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=1200&q=80" alt="Authentic Flame Grilled Mozambican Peri-Peri Chicken">
+      <div class="img-caption">Authentic Peri-Peri Feast</div>
     </div>
   </div>
 
+  <!-- Dress Code Integration Section -->
+  <div class="dress-code-section">
+    <div class="section-label">Attire</div>
+    <div class="dress-code-box">
+      <div class="dress-code-title">Dress Code: Black & Gold</div>
+      <div class="dress-code-desc">To complement our evening, guests are kindly requested to dress in elegant <strong>All-Black</strong>, <strong>All-Gold</strong>, or a combination of both. Dress to impress!</div>
+    </div>
+  </div>
+
+  <!-- RSVP Layout Content Area -->
   <div class="form-title" id="rsvp-anchor">Confirm your attendance</div>
   
   <div class="panel">
     <div id="form-alert" class="alert"></div>
     
     <form id="rsvp-form" onsubmit="submitToEmail(event)">
+      <!-- Web3Forms Config Router Key -->
       <input type="hidden" name="access_key" value="c0a447db-e1ca-4fb9-92fa-c86281670ee6">
       <input type="hidden" name="subject" value="New Graduation RSVP Submission">
-      <input type="hidden" name="from_name" value="RSVP Engine">
+      <input type="hidden" name="from_name" value="Graduation RSVP System">
       
+      <!-- Mandatory State Trackers (Set to Defaults) -->
       <input type="hidden" name="Chicken Selection" id="input-chicken" value="PERI-PERI">
       <input type="hidden" name="Side Dish Choice" id="input-side" value="PAP">
       <input type="hidden" name="Drink Request" id="input-drink" value="STELLA ARTOIS">
 
+      <!-- Name Fields Row -->
       <div class="name-row">
         <div class="form-group">
           <label for="f-first">First Name <span>*</span></label>
@@ -155,6 +178,7 @@
         </div>
       </div>
       
+      <!-- Attendance Field Dropdown -->
       <div class="form-group">
         <label for="f-attending">Will you be attending? <span>*</span></label>
         <select id="f-attending" name="Attendance Status" class="form-control" required onchange="toggleCatering(this.value)">
@@ -163,10 +187,12 @@
         </select>
       </div>
 
+      <!-- Catering Elements Container (Mandatory options pre-checked) -->
       <div id="catering-container" class="conditional-fields" style="display: block;">
         
+        <!-- Chicken Selection Category -->
         <div class="form-group">
-          <label>Choose your chicken</label>
+          <label>Choose your chicken <span>*</span></label>
           <div class="cards-grid">
             <div class="selection-card selected" data-type="chicken" data-val="PERI-PERI" onclick="selectCard(this)">
               <div class="card-indicator"></div>
@@ -186,8 +212,9 @@
           </div>
         </div>
         
+        <!-- Sides Selection Category -->
         <div class="form-group">
-          <label>Choose your side</label>
+          <label>Choose your side <span>*</span></label>
           <div class="cards-grid four-cols">
             <div class="selection-card selected" data-type="side" data-val="PAP" onclick="selectCard(this)">
               <div class="card-indicator"></div>
@@ -206,9 +233,11 @@
             </div>
             <div class="selection-card" data-type="side" data-val="SWEET POTATO" onclick="selectCard(this)">
               <div class="card-indicator"></div>
-              <div class="card-main-text">Sweet Potato</div>
+              <div class="card-main-text">S. Potato</div>
               <div class="card-sub-text"></div>
             </div>
+          </div>
+          <div class="cards-grid four-cols" style="margin-top: 0.5rem;">
             <div class="selection-card" data-type="side" data-val="CHIPS" onclick="selectCard(this)">
               <div class="card-indicator"></div>
               <div class="card-main-text">Chips</div>
@@ -217,27 +246,28 @@
           </div>
         </div>
         
+        <!-- Beverages Selection Category -->
         <div class="form-group">
-          <label>Choose your drink</label>
+          <label>Choose your drink <span>*</span></label>
           <div class="cards-grid four-cols">
             <div class="selection-card selected" data-type="drink" data-val="STELLA ARTOIS" onclick="selectCard(this)">
               <div class="card-indicator"></div>
-              <div class="card-main-text">🍺 Stella Artois</div>
+              <div class="card-main-text">Stella Artois</div>
               <div class="card-sub-text">Beer</div>
             </div>
             <div class="selection-card" data-type="drink" data-val="CASTLE LITE" onclick="selectCard(this)">
               <div class="card-indicator"></div>
-              <div class="card-main-text">🍺 Castle Lite</div>
+              <div class="card-main-text">Castle Lite</div>
               <div class="card-sub-text">Beer</div>
             </div>
             <div class="selection-card" data-type="drink" data-val="FRUIT JUICE" onclick="selectCard(this)">
               <div class="card-indicator"></div>
-              <div class="card-main-text">🧃 Fruit Juice</div>
+              <div class="card-main-text">Fruit Juice</div>
               <div class="card-sub-text">Juice</div>
             </div>
             <div class="selection-card" data-type="drink" data-val="STILL WATER" onclick="selectCard(this)">
               <div class="card-indicator"></div>
-              <div class="card-main-text">💧 Still Water</div>
+              <div class="card-main-text">Still Water</div>
               <div class="card-sub-text">Water</div>
             </div>
           </div>
@@ -245,9 +275,10 @@
 
       </div>
 
+      <!-- Freeform Notes Area -->
       <div class="form-group">
         <label for="f-dietary">Dietary Requirements</label>
-        <textarea id="f-dietary" name="Dietary Restrictions" class="form-control" placeholder="none"></textarea>
+        <textarea id="f-dietary" name="Dietary Restrictions" class="form-control" placeholder="e.g. none, allergies, vegetarian"></textarea>
       </div>
 
       <button type="submit" id="submit-btn" class="btn-submit">Confirm My RSVP →</button>
@@ -256,23 +287,17 @@
 </div>
 
 <script>
-  // Handles the selective highlighting of custom grid cards
   function selectCard(cardElement) {
     const type = cardElement.getAttribute('data-type');
     const val = cardElement.getAttribute('data-val');
     
-    // Unselect brother layout cards
-    const siblings = cardElement.parentElement.querySelectorAll('.selection-card');
+    const siblings = cardElement.parentElement.parentElement.querySelectorAll(`.selection-card[data-type="${type}"]`);
     siblings.forEach(el => el.classList.remove('selected'));
     
-    // Select current target
     cardElement.classList.add('selected');
-    
-    // Feed hidden inputs for payload delivery
     document.getElementById(`input-${type}`).value = val;
   }
 
-  // Toggles optional grids based on active presence status
   function toggleCatering(statusValue) {
     const container = document.getElementById('catering-container');
     if (statusValue.includes("Unfortunately")) {
@@ -282,13 +307,12 @@
       document.getElementById('input-drink').value = "N/A - Not Attending";
     } else {
       container.style.display = 'block';
-      // Restores active node configurations
-      const selectedChicken = container.querySelector('.selection-card[data-type="chicken"].selected');
-      const selectedSide = container.querySelector('.selection-card[data-type="side"].selected');
-      const selectedDrink = container.querySelector('.selection-card[data-type="drink"].selected');
-      if(selectedChicken) document.getElementById('input-chicken').value = selectedChicken.getAttribute('data-val');
-      if(selectedSide) document.getElementById('input-side').value = selectedSide.getAttribute('data-val');
-      if(selectedDrink) document.getElementById('input-drink').value = selectedDrink.getAttribute('data-val');
+      const selChicken = document.querySelector('.selection-card[data-type="chicken"].selected');
+      const selSide = document.querySelector('.selection-card[data-type="side"].selected');
+      const selDrink = document.querySelector('.selection-card[data-type="drink"].selected');
+      if(selChicken) document.getElementById('input-chicken').value = selChicken.getAttribute('data-val');
+      if(selSide) document.getElementById('input-side').value = selSide.getAttribute('data-val');
+      if(selDrink) document.getElementById('input-drink').value = selDrink.getAttribute('data-val');
     }
   }
 
@@ -300,12 +324,11 @@
     document.getElementById('rsvp-anchor').scrollIntoView({ behavior: 'smooth' });
   }
 
-  // Handle data collection and push execution over Web3Forms endpoint router
   async function submitToEmail(event) {
     event.preventDefault();
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
-    btn.textContent = "Processing Registration...";
+    btn.textContent = "Sending Confirmation...";
 
     const formData = new FormData(event.target);
     const object = Object.fromEntries(formData);
@@ -324,15 +347,14 @@
       const resData = await response.json();
 
       if (response.status === 200 && resData.success) {
-        showAlert("Thank you! Your RSVP choices have been registered directly to Jeffrey's inbox.");
+        showAlert("RSVP Successful! Your selection profile has been registered directly.");
         document.getElementById('rsvp-form').reset();
-        // Reset card selection highlights back to baseline
         toggleCatering("Yes");
       } else {
-        showAlert(resData.message || "Submission issue encountered. Please try again.", false);
+        showAlert(resData.message || "An issue occurred. Please check values.", false);
       }
     } catch (e) {
-      showAlert("Network error occurred. Please verify your connection status.", false);
+      showAlert("Server communication failure. Verify internet access.", false);
     } finally {
       btn.disabled = false;
       btn.textContent = "Confirm My RSVP →";
