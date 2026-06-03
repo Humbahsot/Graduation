@@ -95,6 +95,9 @@
   .form-group label span { color: var(--accent); }
   .form-group p.instruction-text { font-size: 10px; color: var(--text-muted); margin-top: -0.2rem; margin-bottom: 0.5rem; font-style: italic; }
   
+  /* Side-by-Side Grid Layout for Chicken & Sides */
+  .chicken-sides-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5rem; margin-bottom: 0.5rem; }
+
   /* Standard Inputs */
   .form-control { width: 100%; background: var(--input-bg); border: none; border-radius: 4px; padding: 12px; color: #000000; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; }
   .form-control:focus { outline: 2px solid var(--gold); }
@@ -104,6 +107,7 @@
 
   /* Card Grid Options */
   .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 0.5rem; }
+  .cards-grid.two-cols { grid-template-columns: repeat(2, 1fr); }
   .cards-grid.four-cols { grid-template-columns: repeat(4, 1fr); }
   
   .selection-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 4px; padding: 12px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; min-height: 75px; }
@@ -132,7 +136,7 @@
   .alert-error { background: rgba(239,68,68,0.1); color: var(--accent); border: 1px solid var(--accent); }
 
   @media (max-width: 640px) {
-    .name-row, .meta-grid, .cards-grid, .cards-grid.four-cols { grid-template-columns: 1fr; gap: 0.5rem; }
+    .name-row, .meta-grid, .cards-grid, .cards-grid.four-cols, .cards-grid.two-cols, .chicken-sides-grid { grid-template-columns: 1fr; gap: 0.5rem; }
     .selection-card { min-height: auto; padding: 10px; }
     header h1, header h2 { font-size: 2.2rem; }
     .panel { padding: 1.25rem; }
@@ -230,30 +234,70 @@
       <!-- Catering Selections Container -->
       <div id="catering-container" style="display: none;">
         
-        <!-- Chicken Meals Section -->
-        <div class="form-group" id="group-chicken">
-          <label>Chicken Meals</label>
-          <p class="instruction-text">Select one option below if you prefer a chicken course</p>
-          <div class="cards-grid">
-            <div class="selection-card" data-type="chicken" data-val="PERI-PERI" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">Peri-Peri</div>
-              <div class="card-sub-text">Bold & Fiery Chicken</div>
-            </div>
-            <div class="selection-card" data-type="chicken" data-val="LEMON & HERB" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">Lemon & Herb</div>
-              <div class="card-sub-text">Zesty Chicken</div>
-            </div>
-            <div class="selection-card" data-type="chicken" data-val="MILD" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">Mild</div>
-              <div class="card-sub-text">Gentle Heat Chicken</div>
+        <!-- SIDE BY SIDE CONTAINER FOR CHICKEN & SIDES -->
+        <div class="chicken-sides-grid">
+          
+          <!-- Chicken Meals Section -->
+          <div class="form-group" id="group-chicken">
+            <label>Chicken Meals</label>
+            <p class="instruction-text">Select one option below if you prefer a chicken course</p>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <div class="selection-card" data-type="chicken" data-val="PERI-PERI" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">Peri-Peri</div>
+                <div class="card-sub-text">Bold & Fiery Chicken</div>
+              </div>
+              <div class="selection-card" data-type="chicken" data-val="LEMON & HERB" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">Lemon & Herb</div>
+                <div class="card-sub-text">Zesty Chicken</div>
+              </div>
+              <div class="selection-card" data-type="chicken" data-val="MILD" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">Mild</div>
+                <div class="card-sub-text">Gentle Heat Chicken</div>
+              </div>
             </div>
           </div>
+
+          <!-- Sides Selection Section (Sit next to Chicken) -->
+          <div class="form-group" id="group-side">
+            <label>Choose your side <span id="side-required-star" style="display:none;">*</span></label>
+            <p class="instruction-text">Required only with Chicken courses</p>
+            <div class="cards-grid two-cols">
+              <div class="selection-card" data-type="side" data-val="PAP" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">Pap</div>
+                <div class="card-sub-text"></div>
+              </div>
+              <div class="selection-card" data-type="side" data-val="SALAD" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">Salad</div>
+                <div class="card-sub-text"></div>
+              </div>
+              <div class="selection-card" data-type="side" data-val="RICE" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">Rice</div>
+                <div class="card-sub-text"></div>
+              </div>
+              <div class="selection-card" data-type="side" data-val="SWEET POTATO" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">S. Potato</div>
+                <div class="card-sub-text"></div>
+              </div>
+            </div>
+            <div style="margin-top: 0.5rem;">
+              <div class="selection-card" data-type="side" data-val="CHIPS" onclick="selectCard(this)">
+                <div class="card-indicator"></div>
+                <div class="card-main-text">Chips</div>
+                <div class="card-sub-text"></div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Fish Category Section (From image_a27009.jpg / WhatsApp Image 2026-06-03 at 18.23.31.jpeg) -->
+        <!-- Fish Category Section -->
         <div class="form-group" id="group-fish">
           <label>Fish & Seafood Category</label>
           <p class="instruction-text">Select one option below if you prefer a fish or vegetarian course instead</p>
@@ -272,40 +316,6 @@
               <div class="card-indicator"></div>
               <div class="card-main-text">Fish & Chips</div>
               <div class="card-sub-text">Crispy battered fish, French fries, coleslaw & tartare sauce</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Sides Selection Section -->
-        <div class="form-group" id="group-side">
-          <label>Choose your side <span>*</span></label>
-          <div class="cards-grid four-cols">
-            <div class="selection-card" data-type="side" data-val="PAP" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">Pap</div>
-              <div class="card-sub-text"></div>
-            </div>
-            <div class="selection-card" data-type="side" data-val="SALAD" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">Salad</div>
-              <div class="card-sub-text"></div>
-            </div>
-            <div class="selection-card" data-type="side" data-val="RICE" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">Rice</div>
-              <div class="card-sub-text"></div>
-            </div>
-            <div class="selection-card" data-type="side" data-val="SWEET POTATO" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">S. Potato</div>
-              <div class="card-sub-text"></div>
-            </div>
-          </div>
-          <div class="cards-grid four-cols" style="margin-top: 0.5rem;">
-            <div class="selection-card" data-type="side" data-val="CHIPS" onclick="selectCard(this)">
-              <div class="card-indicator"></div>
-              <div class="card-main-text">Chips</div>
-              <div class="card-sub-text"></div>
             </div>
           </div>
         </div>
@@ -363,12 +373,24 @@
       fishCards.forEach(el => el.classList.remove('selected'));
       document.getElementById('input-fish').value = "";
       document.getElementById(`group-fish`).classList.remove('validation-error');
+      
+      // Make side required visually
+      document.getElementById('side-required-star').style.display = 'inline';
     }
     if (type === 'fish') {
       const chickenCards = document.querySelectorAll('.selection-card[data-type="chicken"]');
       chickenCards.forEach(el => el.classList.remove('selected'));
       document.getElementById('input-chicken').value = "";
       document.getElementById(`group-chicken`).classList.remove('validation-error');
+      
+      // Clear out selected sides since fish options don't require them
+      const sideCards = document.querySelectorAll('.selection-card[data-type="side"]');
+      sideCards.forEach(el => el.classList.remove('selected'));
+      document.getElementById('input-side').value = "";
+      document.getElementById(`group-side`).classList.remove('validation-error');
+      
+      // Hide visual required asterisk from side layout
+      document.getElementById('side-required-star').style.display = 'none';
     }
 
     const siblings = cardElement.parentElement.parentElement.querySelectorAll(`.selection-card[data-type="${type}"]`);
@@ -385,6 +407,7 @@
     document.getElementById('group-fish').classList.remove('validation-error');
     document.getElementById('group-side').classList.remove('validation-error');
     document.getElementById('group-drink').classList.remove('validation-error');
+    document.getElementById('side-required-star').style.display = 'none';
 
     if (statusValue.includes("Unfortunately")) {
       container.style.display = 'none';
@@ -430,10 +453,13 @@
         document.getElementById('group-fish').classList.add('validation-error');
         errorTriggered = true;
       }
-      if (!sideVal) {
+      
+      // STIPULATION RULE: Side choice is a absolute MUST ONLY if Chicken is selected
+      if (chickenVal && !sideVal) {
         document.getElementById('group-side').classList.add('validation-error');
         errorTriggered = true;
       }
+      
       if (!drinkVal) {
         document.getElementById('group-drink').classList.add('validation-error');
         errorTriggered = true;
@@ -469,6 +495,7 @@
         showAlert("RSVP Successful! Your choices have been submitted.");
         document.getElementById('rsvp-form').reset();
         document.getElementById('catering-container').style.display = 'none';
+        document.getElementById('side-required-star').style.display = 'none';
       } else {
         showAlert(resData.message || "An error occurred with Web3Forms submission.", false);
       }
