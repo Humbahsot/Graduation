@@ -92,6 +92,9 @@
   .selection-card:hover { border-color: rgba(214, 175, 55, 0.6); background: rgba(214, 175, 55, 0.02); }
   .selection-card.selected { border-color: var(--gold); background: rgba(214, 175, 55, 0.08); box-shadow: inset 0 0 0 1px var(--gold); }
   
+  /* Validation error visual outline flash */
+  .form-group.validation-error { border: 1px dashed var(--accent); padding: 10px; border-radius: 4px; background: rgba(255, 77, 77, 0.03); }
+
   .card-main-text { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; line-height: 1.2; padding-right: 12px; }
   .card-sub-text { font-size: 9px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-muted); }
   
@@ -173,20 +176,20 @@
       <input type="hidden" name="subject" value="New Graduation RSVP Submission">
       <input type="hidden" name="from_name" value="Graduation RSVP System">
       
-      <!-- Mandatory State Trackers (Set to Defaults) -->
-      <input type="hidden" name="Chicken Selection" id="input-chicken" value="PERI-PERI">
-      <input type="hidden" name="Side Dish Choice" id="input-side" value="PAP">
-      <input type="hidden" name="Drink Request" id="input-drink" value="STELLA ARTOIS">
+      <!-- Mandatory Hidden Fields -->
+      <input type="hidden" name="Chicken Selection" id="input-chicken" value="">
+      <input type="hidden" name="Side Dish Choice" id="input-side" value="">
+      <input type="hidden" name="Drink Request" id="input-drink" value="">
 
       <!-- Name Fields Row -->
       <div class="name-row">
         <div class="form-group">
           <label for="f-first">First Name <span>*</span></label>
-          <input type="text" id="f-first" name="First Name" class="form-control" required placeholder="Jeffrey">
+          <input type="text" id="f-first" name="First Name" class="form-control" required placeholder="">
         </div>
         <div class="form-group">
           <label for="f-last">Last Name <span>*</span></label>
-          <input type="text" id="f-last" name="Last Name" class="form-control" required placeholder="chauke">
+          <input type="text" id="f-last" name="Last Name" class="form-control" required placeholder="">
         </div>
       </div>
       
@@ -194,19 +197,20 @@
       <div class="form-group">
         <label for="f-attending">Will you be attending? <span>*</span></label>
         <select id="f-attending" name="Attendance Status" class="form-control" required onchange="toggleCatering(this.value)">
-          <option value="Yes, I'll be there! 🎉" selected>Yes, I'll be there! 🎉</option>
+          <option value="" disabled selected>Select your attendance option...</option>
+          <option value="Yes, I'll be there! 🎉">Yes, I'll be there! 🎉</option>
           <option value="Unfortunately I can't make it">Unfortunately I can't make it</option>
         </select>
       </div>
 
-      <!-- Catering Elements Container (Mandatory options pre-checked) -->
-      <div id="catering-container" class="conditional-fields" style="display: block;">
+      <!-- Catering Elements Container -->
+      <div id="catering-container" class="conditional-fields" style="display: none;">
         
         <!-- Chicken Selection Category -->
-        <div class="form-group">
+        <div class="form-group" id="group-chicken">
           <label>Choose your chicken <span>*</span></label>
           <div class="cards-grid">
-            <div class="selection-card selected" data-type="chicken" data-val="PERI-PERI" onclick="selectCard(this)">
+            <div class="selection-card" data-type="chicken" data-val="PERI-PERI" onclick="selectCard(this)">
               <div class="card-indicator"></div>
               <div class="card-main-text">Peri-Peri</div>
               <div class="card-sub-text">Bold & Fiery Spice</div>
@@ -225,10 +229,10 @@
         </div>
         
         <!-- Sides Selection Category -->
-        <div class="form-group">
+        <div class="form-group" id="group-side">
           <label>Choose your side <span>*</span></label>
           <div class="cards-grid four-cols">
-            <div class="selection-card selected" data-type="side" data-val="PAP" onclick="selectCard(this)">
+            <div class="selection-card" data-type="side" data-val="PAP" onclick="selectCard(this)">
               <div class="card-indicator"></div>
               <div class="card-main-text">Pap</div>
               <div class="card-sub-text"></div>
@@ -259,10 +263,10 @@
         </div>
         
         <!-- Beverages Selection Category -->
-        <div class="form-group">
+        <div class="form-group" id="group-drink">
           <label>Choose your drink <span>*</span></label>
           <div class="cards-grid four-cols">
-            <div class="selection-card selected" data-type="drink" data-val="STELLA ARTOIS" onclick="selectCard(this)">
+            <div class="selection-card" data-type="drink" data-val="STELLA ARTOIS" onclick="selectCard(this)">
               <div class="card-indicator"></div>
               <div class="card-main-text">Stella Artois</div>
               <div class="card-sub-text">Beer</div>
@@ -303,6 +307,8 @@
     const type = cardElement.getAttribute('data-type');
     const val = cardElement.getAttribute('data-val');
     
+    document.getElementById(`group-${type}`).classList.remove('validation-error');
+    
     const siblings = cardElement.parentElement.parentElement.querySelectorAll(`.selection-card[data-type="${type}"]`);
     siblings.forEach(el => el.classList.remove('selected'));
     
@@ -312,6 +318,11 @@
 
   function toggleCatering(statusValue) {
     const container = document.getElementById('catering-container');
+    
+    document.getElementById('group-chicken').classList.remove('validation-error');
+    document.getElementById('group-side').classList.remove('validation-error');
+    document.getElementById('group-drink').classList.remove('validation-error');
+
     if (statusValue.includes("Unfortunately")) {
       container.style.display = 'none';
       document.getElementById('input-chicken').value = "N/A - Not Attending";
@@ -319,12 +330,11 @@
       document.getElementById('input-drink').value = "N/A - Not Attending";
     } else {
       container.style.display = 'block';
-      const selChicken = document.querySelector('.selection-card[data-type="chicken"].selected');
-      const selSide = document.querySelector('.selection-card[data-type="side"].selected');
-      const selDrink = document.querySelector('.selection-card[data-type="drink"].selected');
-      if(selChicken) document.getElementById('input-chicken').value = selChicken.getAttribute('data-val');
-      if(selSide) document.getElementById('input-side').value = selSide.getAttribute('data-val');
-      if(selDrink) document.getElementById('input-drink').value = selDrink.getAttribute('data-val');
+      const cards = container.querySelectorAll('.selection-card');
+      cards.forEach(c => c.classList.remove('selected'));
+      document.getElementById('input-chicken').value = "";
+      document.getElementById('input-side').value = "";
+      document.getElementById('input-drink').value = "";
     }
   }
 
@@ -338,6 +348,35 @@
 
   async function submitToEmail(event) {
     event.preventDefault();
+    
+    const attendance = document.getElementById('f-attending').value;
+    
+    if (attendance.includes("Yes")) {
+      const chickenVal = document.getElementById('input-chicken').value;
+      const sideVal = document.getElementById('input-side').value;
+      const drinkVal = document.getElementById('input-drink').value;
+      
+      let errorTriggered = false;
+      
+      if (!chickenVal) {
+        document.getElementById('group-chicken').classList.add('validation-error');
+        errorTriggered = true;
+      }
+      if (!sideVal) {
+        document.getElementById('group-side').classList.add('validation-error');
+        errorTriggered = true;
+      }
+      if (!drinkVal) {
+        document.getElementById('group-drink').classList.add('validation-error');
+        errorTriggered = true;
+      }
+      
+      if (errorTriggered) {
+        showAlert("Please select an option for all required menu selections.", false);
+        return;
+      }
+    }
+
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
     btn.textContent = "Sending Confirmation...";
@@ -361,7 +400,7 @@
       if (response.status === 200 && resData.success) {
         showAlert("RSVP Successful! Your selection profile has been registered directly.");
         document.getElementById('rsvp-form').reset();
-        toggleCatering("Yes");
+        document.getElementById('catering-container').style.display = 'none';
       } else {
         showAlert(resData.message || "An issue occurred. Please check values.", false);
       }
